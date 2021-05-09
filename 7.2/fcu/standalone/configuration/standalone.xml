@@ -12,6 +12,7 @@
         <extension module="org.jboss.as.jmx"/>
         <extension module="org.jboss.as.jpa"/>
         <extension module="org.jboss.as.jsf"/>
+        <extension module="org.jboss.as.jsr77"/>
         <extension module="org.jboss.as.logging"/>
         <extension module="org.jboss.as.mail"/>
         <extension module="org.jboss.as.naming"/>
@@ -29,13 +30,24 @@
         <extension module="org.wildfly.extension.ee-security"/>
         <extension module="org.wildfly.extension.elytron"/>
         <extension module="org.wildfly.extension.io"/>
+        <extension module="org.wildfly.extension.messaging-activemq"/>
         <extension module="org.wildfly.extension.microprofile.config-smallrye"/>
         <extension module="org.wildfly.extension.microprofile.health-smallrye"/>
         <extension module="org.wildfly.extension.microprofile.opentracing-smallrye"/>
         <extension module="org.wildfly.extension.request-controller"/>
         <extension module="org.wildfly.extension.security.manager"/>
         <extension module="org.wildfly.extension.undertow"/>
+        <extension module="org.wildfly.iiop-openjdk"/>
     </extensions>
+    <system-properties>
+        <property name="tafj.home" value="/transact/TAFJ"/>
+        <property name="t24.home" value="/transact/T24"/>
+        <property name="org.apache.catalina.connector.URI_ENCODING" value="UTF-8"/>
+        <property name="org.apache.catalina.connector.USE_BODY_ENCODING_FOR_QUERY_STRING" value="true"/>
+        <property name="jboss.as.management.blocking.timeout" value="10000"/>
+        <property name="edgeSystemPropertyUpdaters" value="com.temenos.connect.system.BRPRuntimeProperties"/>
+        <property name="file.encoding" value="UTF-8"/>
+    </system-properties>
     <management>
         <security-realms>
             <security-realm name="ManagementRealm">
@@ -145,17 +157,70 @@
         <subsystem xmlns="urn:jboss:domain:core-management:1.0"/>
         <subsystem xmlns="urn:jboss:domain:datasources:5.0">
             <datasources>
-                <datasource jndi-name="java:jboss/datasources/ExampleDS" pool-name="ExampleDS" enabled="true" use-java-context="true">
-                    <connection-url>jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE</connection-url>
-                    <driver>h2</driver>
+                <datasource jta="true" jndi-name="java:/jdbc/t24DS" pool-name="t24DS" enabled="true" use-java-context="true" use-ccm="true">
+                    <connection-url>jdbc:sqlserver://FCU-R20QASQL01.FIRSTONTARIO.COM\QASQL:1433;databaseName=T24Deloitte</connection-url>
+                    <connection-property name="defaultRowPrefetch">
+                        100
+                    </connection-property>
+                    <driver>sqljdbc</driver>
+                    <pool>
+                        <min-pool-size>5</min-pool-size>
+                        <max-pool-size>220</max-pool-size>
+                        <flush-strategy>FailingConnectionOnly</flush-strategy>
+                    </pool>
                     <security>
-                        <user-name>sa</user-name>
-                        <password>sa</password>
+                        <user-name>R20QAUser</user-name>
+                        <password>EDcCf@7PA0DFR4j^</password>
+                    </security>
+                </datasource>
+                <datasource jta="true" jndi-name="java:/jdbc/t24Axis2DS" pool-name="Axis2H2DS" enabled="true" use-java-context="true" use-ccm="true">
+                    <connection-url>jdbc:sqlserver://FCU-R20QASQL01.FIRSTONTARIO.COM\QASQL:1433;databaseName=T24Deloitte</connection-url>
+                    <connection-property name="defaultRowPrefetch">
+                        100
+                    </connection-property>
+                    <driver>sqljdbc</driver>
+                    <pool>
+                        <min-pool-size>5</min-pool-size>
+                        <max-pool-size>220</max-pool-size>
+                        <flush-strategy>FailingConnectionOnly</flush-strategy>
+                    </pool>
+                    <security>
+                        <user-name>R20QAUser</user-name>
+                        <password>EDcCf@7PA0DFR4j^</password>
+                    </security>
+                </datasource>
+                <datasource jta="true" jndi-name="java:/jdbc/t24RODS" pool-name="t24RODS" enabled="true" use-java-context="true" use-ccm="true">
+                    <connection-url>jdbc:sqlserver://FCU-R20QASQL01.FIRSTONTARIO.COM\QASQL:1433;databaseName=T24Deloitte</connection-url>
+                    <connection-property name="defaultRowPrefetch">
+                        100
+                    </connection-property>
+                    <driver>sqljdbc</driver>
+                    <pool>
+                        <min-pool-size>5</min-pool-size>
+                        <max-pool-size>220</max-pool-size>
+                        <flush-strategy>FailingConnectionOnly</flush-strategy>
+                    </pool>
+                    <security>
+                        <user-name>R20QAUser</user-name>
+                        <password>EDcCf@7PA0DFR4j^</password>
+                    </security>
+                </datasource>
+                <datasource jta="false" jndi-name="java:/jdbc/t24LockingDS" pool-name="t24LockingDS" enabled="true" use-java-context="true" use-ccm="true">
+                    <connection-url>jdbc:sqlserver://FCU-R20QASQL01.FIRSTONTARIO.COM\QASQL:1433;databaseName=T24Deloitte</connection-url>
+                    <driver>sqljdbc</driver>
+                    <pool>
+                        <min-pool-size>5</min-pool-size>
+                        <max-pool-size>220</max-pool-size>
+                        <flush-strategy>FailingConnectionOnly</flush-strategy>
+                    </pool>
+                    <security>
+                        <user-name>R20QAUser</user-name>
+                        <password>EDcCf@7PA0DFR4j^</password>
                     </security>
                 </datasource>
                 <drivers>
-                    <driver name="h2" module="com.h2database.h2">
-                        <xa-datasource-class>org.h2.jdbcx.JdbcDataSource</xa-datasource-class>
+                    <driver name="sqljdbc" module="com.microsoft.sqlserver">
+                        <xa-datasource-class>com.microsoft.sqlserver.jdbc.SQLServerXADataSource</xa-datasource-class>
                     </driver>
                 </drivers>
             </datasources>
@@ -165,6 +230,10 @@
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:discovery:1.0"/>
         <subsystem xmlns="urn:jboss:domain:ee:4.0">
+            <global-modules>
+                <module name="com.temenos.tafj" slot="main"/>
+                <module name="com.temenos.t24" slot="main"/>
+            </global-modules>
             <spec-descriptor-property-replacement>false</spec-descriptor-property-replacement>
             <concurrent>
                 <context-services>
@@ -180,7 +249,7 @@
                     <managed-scheduled-executor-service name="default" jndi-name="java:jboss/ee/concurrency/scheduler/default" context-service="default" hung-task-threshold="60000" keepalive-time="3000"/>
                 </managed-scheduled-executor-services>
             </concurrent>
-            <default-bindings context-service="java:jboss/ee/concurrency/context/default" datasource="java:jboss/datasources/ExampleDS" managed-executor-service="java:jboss/ee/concurrency/executor/default" managed-scheduled-executor-service="java:jboss/ee/concurrency/scheduler/default" managed-thread-factory="java:jboss/ee/concurrency/factory/default"/>
+            <default-bindings context-service="java:jboss/ee/concurrency/context/default" datasource="java:/jdbc/t24DS" jms-connection-factory="java:jboss/DefaultJMSConnectionFactory" managed-executor-service="java:jboss/ee/concurrency/executor/default" managed-scheduled-executor-service="java:jboss/ee/concurrency/scheduler/default" managed-thread-factory="java:jboss/ee/concurrency/factory/default"/>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:ee-security:1.0"/>
         <subsystem xmlns="urn:jboss:domain:ejb3:5.0">
@@ -191,10 +260,35 @@
                 <stateful default-access-timeout="5000" cache-ref="simple" passivation-disabled-cache-ref="simple"/>
                 <singleton default-access-timeout="5000"/>
             </session-bean>
+            <mdb>
+                <resource-adapter-ref resource-adapter-name="${ejb.resource-adapter-name:activemq-ra.rar}"/>
+                <bean-instance-pool-ref pool-name="mdb-strict-max-pool"/>
+            </mdb>
             <pools>
                 <bean-instance-pools>
                     <strict-max-pool name="mdb-strict-max-pool" derive-size="from-cpu-count" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
                     <strict-max-pool name="slsb-strict-max-pool" derive-size="from-worker-pools" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="ofs-mdb-strict-max-pool" max-pool-size="10" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="browser-mdb-strict-max-pool" max-pool-size="10" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="arcmob-mdb-strict-max-pool" max-pool-size="10" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="tws-mdb-strict-max-pool" max-pool-size="10" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="tcib-mdb-strict-max-pool" max-pool-size="10" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="tcibcorp-mdb-strict-max-pool" max-pool-size="10" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="tcibwealth-mdb-strict-max-pool" max-pool-size="10" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="callat-mdb-strict-max-pool" max-pool-size="10" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="aml-mdb-strict-max-pool" max-pool-size="10" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="tps-mdb-strict-max-pool" max-pool-size="10" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="seat-mdb-strict-max-pool" max-pool-size="10" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="phantom-mdb-strict-max-pool" max-pool-size="20" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="swf-mdb-strict-max-pool" max-pool-size="10" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="aaint-mdb-strict-max-pool" max-pool-size="10" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="aaext-mdb-strict-max-pool" max-pool-size="10" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="irisint-mdb-strict-max-pool" max-pool-size="10" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="irisext-mdb-strict-max-pool" max-pool-size="10" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="inst-mdb-strict-max-pool" max-pool-size="10" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="dsfpackage-mdb-strict-max-pool" max-pool-size="10" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="irismetadata-mdb-strict-max-pool" max-pool-size="10" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="management-mdb-strict-max-pool" max-pool-size="1" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
                 </bean-instance-pools>
             </pools>
             <caches>
@@ -222,6 +316,7 @@
                     <keepalive-time time="100" unit="milliseconds"/>
                 </thread-pool>
             </thread-pools>
+            <iiop enable-by-default="false" use-qualified-name="false"/>
             <default-security-domain value="other"/>
             <default-missing-method-permissions-deny-access value="true"/>
             <log-system-exceptions value="true"/>
@@ -326,6 +421,11 @@
                 <provider-sasl-server-factory name="global"/>
             </sasl>
         </subsystem>
+        <subsystem xmlns="urn:jboss:domain:iiop-openjdk:2.1">
+            <orb socket-binding="iiop"/>
+            <initializers security="identity" transactions="spec"/>
+            <security server-requires-ssl="false" client-requires-ssl="false"/>
+        </subsystem>
         <subsystem xmlns="urn:jboss:domain:infinispan:7.0">
             <cache-container name="server" default-cache="default" module="org.wildfly.clustering.server">
                 <local-cache name="default">
@@ -393,10 +493,105 @@
             <jpa default-datasource="" default-extended-persistence-inheritance="DEEP"/>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:jsf:1.1"/>
+        <subsystem xmlns="urn:jboss:domain:jsr77:1.0"/>
         <subsystem xmlns="urn:jboss:domain:mail:3.0">
             <mail-session name="default" jndi-name="java:jboss/mail/Default">
                 <smtp-server outbound-socket-binding-ref="mail-smtp"/>
             </mail-session>
+        </subsystem>
+        <subsystem xmlns="urn:jboss:domain:messaging-activemq:4.0">
+            <server name="default">
+                <journal pool-files="10"/>
+                <security-setting name="#">
+                    <role name="guest" send="true" consume="true" create-non-durable-queue="true" delete-non-durable-queue="true"/>
+                </security-setting>
+                <address-setting name="#" dead-letter-address="jms.queue.DLQ" expiry-address="jms.queue.ExpiryQueue" max-size-bytes="10485760" page-size-bytes="2097152" message-counter-history-day-limit="10"/>
+                <http-connector name="http-connector" socket-binding="http" endpoint="http-acceptor"/>
+                <http-connector name="http-connector-throughput" socket-binding="http" endpoint="http-acceptor-throughput">
+                    <param name="batch-delay" value="50"/>
+                </http-connector>
+                <in-vm-connector name="in-vm" server-id="0">
+                    <param name="buffer-pooling" value="false"/>
+                </in-vm-connector>
+                <http-acceptor name="http-acceptor" http-listener="default"/>
+                <http-acceptor name="http-acceptor-throughput" http-listener="default">
+                    <param name="batch-delay" value="50"/>
+                    <param name="direct-deliver" value="false"/>
+                </http-acceptor>
+                <in-vm-acceptor name="in-vm" server-id="0">
+                    <param name="buffer-pooling" value="false"/>
+                </in-vm-acceptor>
+                <jms-queue name="ExpiryQueue" entries="java:/jms/queue/ExpiryQueue"/>
+                <jms-queue name="DLQ" entries="java:/jms/queue/DLQ"/>
+                <jms-queue name="t24OFSQueue" entries="queue/t24OFSQueue java:jboss/exported/jms/queue/t24OFSQueue"/>
+                <jms-queue name="t24OFSReplyQueue" entries="queue/t24OFSReplyQueue java:jboss/exported/jms/queue/t24OFSReplyQueue"/>
+                <jms-queue name="t24BROWSERQueue" entries="queue/t24BROWSERQueue java:jboss/exported/jms/queue/t24BROWSERQueue"/>
+                <jms-queue name="t24BROWSERReplyQueue" entries="queue/t24BROWSERReplyQueue java:jboss/exported/jms/queue/t24BROWSERReplyQueue"/>
+                <jms-queue name="t24ARCMOBQueue" entries="queue/t24ARCMOBQueue java:jboss/exported/jms/queue/t24ARCMOBQueue"/>
+                <jms-queue name="t24ARCMOBReplyQueue" entries="queue/t24ARCMOBReplyQueue java:jboss/exported/jms/queue/t24ARCMOBReplyQueue"/>
+                <jms-queue name="t24TWSQueue" entries="queue/t24TWSQueue java:jboss/exported/jms/queue/t24TWSQueue"/>
+                <jms-queue name="t24TWSReplyQueue" entries="queue/t24TWSReplyQueue java:jboss/exported/jms/queue/t24TWSReplyQueue"/>
+                <jms-queue name="t24TCIBQueue" entries="queue/t24TCIBQueue java:jboss/exported/jms/queue/t24TCIBQueue"/>
+                <jms-queue name="t24TCIBReplyQueue" entries="queue/t24TCIBReplyQueue java:jboss/exported/jms/queue/t24TCIBReplyQueue"/>
+                <jms-queue name="t24TCIBCORPQueue" entries="queue/t24TCIBCORPQueue java:jboss/exported/jms/queue/t24TCIBCORPQueue"/>
+                <jms-queue name="t24TCIBCORPReplyQueue" entries="queue/t24TCIBCORPReplyQueue java:jboss/exported/jms/queue/t24TCIBCORPReplyQueue"/>
+                <jms-queue name="t24TCIBWEALTHQueue" entries="queue/t24TCIBWEALTHQueue java:jboss/exported/jms/queue/t24TCIBWEALTHQueue"/>
+                <jms-queue name="t24TCIBWEALTHReplyQueue" entries="queue/t24TCIBWEALTHReplyQueue java:jboss/exported/jms/queue/t24TCIBWEALTHReplyQueue"/>
+                <jms-queue name="t24CALLATQueue" entries="queue/t24CALLATQueue java:jboss/exported/jms/queue/t24CALLATQueue"/>
+                <jms-queue name="t24CALLATReplyQueue" entries="queue/t24CALLATReplyQueue java:jboss/exported/jms/queue/t24CALLATReplyQueue"/>
+                <jms-queue name="t24AMLQueue" entries="queue/t24AMLQueue java:jboss/exported/jms/queue/t24AMLQueue"/>
+                <jms-queue name="t24AMLReplyQueue" entries="queue/t24AMLReplyQueue java:jboss/exported/jms/queue/t24AMLReplyQueue"/>
+                <jms-queue name="t24TPSQueue" entries="queue/t24TPSQueue java:jboss/exported/jms/queue/t24TPSQueue"/>
+                <jms-queue name="t24TPSReplyQueue" entries="queue/t24TPSReplyQueue java:jboss/exported/jms/queue/t24TPSReplyQueue"/>
+                <jms-queue name="t24TPSInstInQueue" entries="queue/t24TPSInstInQueue java:jboss/exported/jms/queue/t24TPSInstInQueue"/>
+                <jms-queue name="t24TPSInstInReplyQueue" entries="queue/t24TPSInstInReplyQueue java:jboss/exported/jms/queue/t24TPSInstInReplyQueue"/>
+                <jms-queue name="t24SEATQueue" entries="queue/t24SEATQueue java:jboss/exported/jms/queue/t24SEATQueue"/>
+                <jms-queue name="t24SEATReplyQueue" entries="queue/t24SEATReplyQueue java:jboss/exported/jms/queue/t24SEATReplyQueue"/>
+                <jms-queue name="t24IFInboundQueue" entries="queue/t24IFInboundQueue java:jboss/exported/jms/queue/t24IFInboundQueue"/>
+                <jms-queue name="t24IFOutboundQueue" entries="queue/t24IFOutboundQueue java:jboss/exported/jms/queue/t24IFOutboundQueue"/>
+                <jms-queue name="t24SWFQueue" entries="queue/t24SWFQueue java:jboss/exported/jms/queue/t24SWFQueue"/>
+                <jms-queue name="t24SWFReplyQueue" entries="queue/t24SWFReplyQueue java:jboss/exported/jms/queue/t24SWFReplyQueue"/>
+                <jms-queue name="t24AAIntQueue" entries="queue/t24AAIntQueue java:jboss/exported/jms/queue/t24AAIntQueue"/>
+                <jms-queue name="t24AAIntReplyQueue" entries="queue/t24AAIntReplyQueue java:jboss/exported/jms/queue/t24AAIntReplyQueue"/>
+                <jms-queue name="t24AAExtQueue" entries="queue/t24AAExtQueue java:jboss/exported/jms/queue/t24AAExtQueue"/>
+                <jms-queue name="t24AAExtReplyQueue" entries="queue/t24AAExtReplyQueue java:jboss/exported/jms/queue/t24AAExtReplyQueue"/>
+                <jms-queue name="t24IRISIntQueue" entries="queue/t24IRISIntQueue java:jboss/exported/jms/queue/t24IRISIntQueue"/>
+                <jms-queue name="t24IRISIntReplyQueue" entries="queue/t24IRISIntReplyQueue java:jboss/exported/jms/queue/t24IRISIntReplyQueue"/>
+                <jms-queue name="t24IRISExtQueue" entries="queue/t24IRISExtQueue java:jboss/exported/jms/queue/t24IRISExtQueue"/>
+                <jms-queue name="t24IRISExtReplyQueue" entries="queue/t24IRISExtReplyQueue java:jboss/exported/jms/queue/t24IRISExtReplyQueue"/>
+                <jms-queue name="t24DSFPACKAGERQueue" entries="queue/t24DSFPACKAGERQueue java:jboss/exported/jms/queue/t24DSFPACKAGERQueue"/>
+                <jms-queue name="t24DSFPACKAGERReplyQueue" entries="queue/t24DSFPACKAGERReplyQueue java:jboss/exported/jms/queue/t24DSFPACKAGERReplyQueue"/>
+                <jms-queue name="t24IRISMetaDataQueue" entries="queue/t24IRISMetaDataQueue java:jboss/exported/jms/queue/t24IRISMetaDataQueue"/>
+                <jms-queue name="t24IRISMetaDataReplyQueue" entries="queue/t24IRISMetaDataReplyQueue java:jboss/exported/jms/queue/t24IRISMetaDataReplyQueue"/>
+                <jms-queue name="t24EXECQueue" entries="queue/t24EXECQueue java:jboss/exported/jms/queue/t24EXECQueue"/>
+                <jms-queue name="t24EbillQueue" entries="queue/t24EbillQueue java:jboss/exported/jms/queue/t24EbillQueue"/>
+                <jms-queue name="t24EbillReplyQueue" entries="queue/t24EbillReplyQueue java:jboss/exported/jms/queue/t24EbillReplyQueue"/>
+                <jms-queue name="MDIREQ" entries="queue/MDIREQ java:jboss/exported/jms/queue/MDIREQ"/>
+                <jms-queue name="MDIRESP" entries="queue/MDIRESP java:jboss/exported/jms/queue/MDIRESP"/>
+                <jms-queue name="ATMREQ" entries="queue/ATMREQ java:jboss/exported/jms/queue/ATMREQ"/>
+                <jms-queue name="ATMRESP" entries="queue/ATMRESP java:jboss/exported/jms/queue/ATMRESP"/>
+                <jms-queue name="POSREQ" entries="queue/POSREQ java:jboss/exported/jms/queue/POSREQ"/>
+                <jms-queue name="POSRESP" entries="queue/POSRESP java:jboss/exported/jms/queue/POSRESP"/>
+                <jms-queue name="FHMREQ" entries="queue/FHMREQ java:jboss/exported/jms/queue/FHMREQ"/>
+                <jms-queue name="FHMRESP" entries="queue/FHMRESP java:jboss/exported/jms/queue/FHMRESP"/>
+                <jms-queue name="PROLENDERREQ" entries="queue/PROLENDERREQ java:jboss/exported/jms/queue/PROLENDERREQ"/>
+                <jms-queue name="PROLENDERRES" entries="queue/PROLENDERRES java:jboss/exported/jms/queue/PROLENDERRES"/>
+                <jms-queue name="IVRSYNTREQ" entries="queue/IVRSYNTREQ java:jboss/exported/jms/queue/IVRSYNTREQ"/>
+                <jms-queue name="IVRSYNTRES" entries="queue/IVRSYNTRES java:jboss/exported/jms/queue/IVRSYNTRES"/>
+                <jms-queue name="IVRRES" entries="queue/IVRRES java:jboss/exported/jms/queue/IVRRES"/>
+                <jms-queue name="IVRREQ" entries="queue/IVRREQ java:jboss/exported/jms/queue/IVRREQ"/>
+                <jms-queue name="t24HSMRequestQueue" entries="queue/t24HSMRequestQueue java:jboss/exported/jms/queue/t24HSMRequestQueue"/>
+                <jms-queue name="t24HSMReplyQueue" entries="queue/t24HSMReplyQueue java:jboss/exported/jms/queue/t24HSMReplyQueue"/>
+                <jms-queue name="MDBRESP" entries="queue/MDBRESP java:jboss/exported/jms/queue/MDBRESP"/>
+                <jms-queue name="MDBREQ" entries="queue/MDBREQ java:jboss/exported/jms/queue/MDBREQ"/>
+                <jms-queue name="EBILLFUTPAYRESP" entries="queue/EBILLFUTPAYRESP java:jboss/exported/jms/queue/EBILLFUTPAYRESP"/>
+                <jms-queue name="EBILLFUTPAYREQ" entries="queue/EBILLFUTPAYREQ java:jboss/exported/jms/queue/EBILLFUTPAYREQ"/>
+                <jms-topic name="tecEventsTopic" entries="topic/tecEventsTopic java:jboss/exported/jms/topic/tecEventsTopic"/>
+                <jms-topic name="t24ManagementTopic" entries="topic/t24ManagementTopic java:jboss/exported/jms/topic/t24ManagementTopic"/>
+                <connection-factory name="InVmConnectionFactory" entries="java:/ConnectionFactory" connectors="in-vm"/>
+                <connection-factory name="RemoteConnectionFactory" entries="java:jboss/exported/jms/RemoteConnectionFactory" connectors="http-connector"/>
+                <pooled-connection-factory name="activemq-ra" entries="java:/JmsXA java:jboss/DefaultJMSConnectionFactory" connectors="in-vm" transaction="xa"/>
+            </server>
         </subsystem>
         <subsystem xmlns="urn:wildfly:microprofile-config-smallrye:1.0"/>
         <subsystem xmlns="urn:wildfly:microprofile-health-smallrye:1.0" security-enabled="false"/>
@@ -436,6 +631,7 @@
                         <auth-module code="Dummy"/>
                     </authentication-jaspi>
                 </security-domain>
+                <security-domain name="T24" cache-type="default"/>
                 <security-domain name="jboss-ejb-policy" cache-type="default">
                     <authorization>
                         <policy-module code="Delegating" flag="required"/>
@@ -462,7 +658,7 @@
         <subsystem xmlns="urn:jboss:domain:undertow:7.0" default-server="default-server" default-virtual-host="default-host" default-servlet-container="default" default-security-domain="other">
             <buffer-cache name="default"/>
             <server name="default-server">
-                <http-listener name="default" socket-binding="http" redirect-socket="https" enable-http2="true"/>
+                <http-listener name="default" socket-binding="http" max-parameters="10000" redirect-socket="https" enable-http2="true"/>
                 <https-listener name="https" socket-binding="https" security-realm="ApplicationRealm" enable-http2="true"/>
                 <host name="default-host" alias="localhost">
                     <location name="/" handler="welcome-content"/>
@@ -491,10 +687,13 @@
     </profile>
     <interfaces>
         <interface name="management">
-            <inet-address value="${jboss.bind.address.management:127.0.0.1}"/>
+            <inet-address value="${jboss.bind.address.management:0.0.0.0}"/>
         </interface>
         <interface name="public">
-            <inet-address value="${jboss.bind.address:127.0.0.1}"/>
+            <inet-address value="${jboss.bind.address:0.0.0.0}"/>
+        </interface>
+        <interface name="unsecure">
+            <inet-address value="${jboss.bind.address.unsecure:0.0.0.0}"/>
         </interface>
     </interfaces>
     <socket-binding-group name="standard-sockets" default-interface="public" port-offset="${jboss.socket.binding.port-offset:0}">
@@ -505,6 +704,8 @@
         <socket-binding name="https" port="${jboss.https.port:8443}"/>
         <socket-binding name="txn-recovery-environment" port="4712"/>
         <socket-binding name="txn-status-manager" port="4713"/>
+        <socket-binding name="iiop" interface="unsecure" port="3528"/>
+        <socket-binding name="iiop-ssl" interface="unsecure" port="3529"/>
         <outbound-socket-binding name="mail-smtp">
             <remote-destination host="localhost" port="25"/>
         </outbound-socket-binding>
