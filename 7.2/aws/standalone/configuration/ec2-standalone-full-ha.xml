@@ -99,6 +99,12 @@
     </management>
     <profile>
         <subsystem xmlns="urn:jboss:domain:logging:6.0">
+            <console-handler name="CONSOLE">
+                <level name="INFO"/>
+                <formatter>
+                    <named-formatter name="COLOR-PATTERN"/>
+                </formatter>
+            </console-handler>
             <periodic-rotating-file-handler name="FILE" autoflush="true">
                 <formatter>
                     <named-formatter name="PATTERN"/>
@@ -119,6 +125,7 @@
             <root-logger>
                 <level name="INFO"/>
                 <handlers>
+                    <handler name="CONSOLE"/>
                     <handler name="FILE"/>
                 </handlers>
             </root-logger>
@@ -399,7 +406,8 @@
         <subsystem xmlns="urn:jboss:domain:jdr:1.0"/>
         <subsystem xmlns="urn:jboss:domain:jgroups:6.0">
             <channels default="ee">
-                <channel name="ee" stack="udp" cluster="ejb"/>
+                <!-- <channel name="ee" stack="udp" cluster="ejb"/> -->
+                <channel name="ee" stack="tcp" cluster="ejb"/>
             </channels>
             <stacks>
                 <stack name="udp">
@@ -419,17 +427,32 @@
                 </stack>
                 <stack name="tcp">
                     <transport type="TCP" socket-binding="jgroups-tcp"/>
-                    <socket-protocol type="MPING" socket-binding="jgroups-mping"/>
+                    <!-- Same machine -->
+                    <!-- <protocol type="TCPPING">
+                        <property name="initial_hosts">127.0.0.1[7600],127.0.0.1[7700]</property>
+                        <property name="port_range">0</property>
+                    </protocol> -->
+                    <!-- Different machines -->
+                    <protocol type="TCPPING">
+                        <property name="initial_hosts">172.31.46.240[7600],172.31.43.234[7600]</property>
+                        <property name="port_range">0</property>
+                    </protocol>
+                    <!-- <socket-protocol type="MPING" socket-binding="jgroups-mping"/> -->
                     <protocol type="MERGE3"/>
-                    <protocol type="FD_SOCK"/>
+                    <protocol type="FD_SOCK" socket-binding="jgroups-tcp-fd"/>
                     <protocol type="FD_ALL"/>
                     <protocol type="VERIFY_SUSPECT"/>
                     <protocol type="pbcast.NAKACK2"/>
                     <protocol type="UNICAST3"/>
                     <protocol type="pbcast.STABLE"/>
+                    <auth-protocol type="AUTH">
+                        <plain-token>
+                            <shared-secret-reference clear-text="Wxyz1234"/>
+                        </plain-token>
+                    </auth-protocol>
                     <protocol type="pbcast.GMS"/>
                     <protocol type="MFC"/>
-                    <protocol type="FRAG3"/>
+                    <protocol type="FRAG2"/>
                 </stack>
             </stacks>
         </subsystem>
@@ -449,7 +472,7 @@
             </mail-session>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:messaging-activemq:4.0">
-            <server name="default">
+            <server name="default" id-cache-size="2000"> <!-- Default: 20000 -->
                 <cluster password="${jboss.messaging.cluster.password:CHANGE ME!!}"/>
                 <journal pool-files="10"/>
                 <security-setting name="#">
