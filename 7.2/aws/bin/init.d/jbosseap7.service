@@ -1,0 +1,10 @@
+[Unit]
+Description=start the jboss instance
+
+[Service]
+User=root
+ExecStart=/home/ec2-user/jboss-eap-7.2/bin/standalone.sh --server-config=ec2-standalone-full-ha.xml -Djboss.bind.address=172.31.46.240 -Djboss.bind.address.management=0.0.0.0 -Djboss.bind.address.private=172.31.46.240 -Djboss.bind.address.unsecure=172.31.46.240 -Djboss.server.name=server1 -Djboss.node.name=node1 -Djboss.tx.node.id=txnode1 -Djboss.messaging.cluster.password=Abcd1234
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

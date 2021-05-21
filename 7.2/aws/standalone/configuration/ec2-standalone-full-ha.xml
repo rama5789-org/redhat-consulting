@@ -122,6 +122,13 @@
             <logger category="sun.rmi">
                 <level name="WARN"/>
             </logger>
+            <!-- Capture more fine logs -->
+            <!-- <logger category="org.jgroups">
+                <level name="TRACE"/>
+            </logger> -->
+            <!-- <logger category="org.infinispan">
+                <level name="TRACE"/>
+            </logger> -->
             <root-logger>
                 <level name="INFO"/>
                 <handlers>

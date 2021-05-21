@@ -37,6 +37,8 @@ https://www.howtogeek.com/437958/how-to-use-the-chmod-command-on-linux/
 # Redhat cluster:
 
 http://middlewaremagic.com/jboss/?p=1952
+https://access.redhat.com/solutions/18601 - initiate a graceful shutdown of JBoss EAP 7/6
+https://access.redhat.com/solutions/1320133 - execute the JBoss EAP 6/7 using Systemctl
 https://access.redhat.com/solutions/2339831 - standalone cluster mode
 https://github.com/tqvarnst/jboss-eap7-summit-lab/blob/master/exercise6-high-availability.adoc
 https://access.redhat.com/solutions/869823 - cluster view
@@ -46,14 +48,16 @@ https://access.redhat.com/solutions/3021711 - TCP Clustering
 https://access.redhat.com/solutions/4284751 - The size of duplicate cache detection 
 https://access.redhat.com/solutions/337963 -  change the log level jgroups / infinispan
 https://access.redhat.com/solutions/24898 - Enable session replication
-
 https://access.redhat.com/solutions/3895201 - keystore not found
-
-https://access.redhat.com/documentation/en-us/reference_architectures/2017/html-single/configuring_a_red_hat_jboss_eap_7_cluster/index
+https://access.redhat.com/documentation/en-us/reference_architectures/2017/html-single/configuring_a_red_hat_jboss_eap_7_cluster/index - domain cluster mode
+https://access.redhat.com/solutions/384393 - Periodic size rotating log handler
+https://access.redhat.com/labs/logreaper/ - log analyzer
+https://access.redhat.com/solutions/47017 - JBoss Clustering doesn,t work while binding it,s nodes to 0.0.0.0
+https://access.redhat.com/solutions/796323 - Deleting the data and tmp directories Before Each Restart of JBoss EAP is Not Recommended
 
 https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.2/html/development_guide/clustering_in_web_applications
 
-https://access.redhat.com/labs/logreaper/
+
 
 https://access.redhat.com/documentation/en-us/red_hat_application_migration_toolkit/4.3/html/cli_guide/getting_started
 
@@ -143,7 +147,7 @@ $ sudo su - jboss-user # home dir
 $ sudo su jboss-user # pwd dir
 Last login: Tue Apr 13 13:21:30 EDT 2021 on pts/2
 
-[jboss-user@FCU-R20QAAPP01 ~]$ ls -la
+[jboss-user@FCU-R20QAAPP01 ~]$ ls -la # ls -lrth (includes the file size)
 total 24
 drwx------.  3 jboss-user jboss-user  117 Apr 13 08:56 .
 drwxr-xr-x. 17 root       root        234 Apr 13 08:31 ..

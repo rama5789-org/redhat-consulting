@@ -46,6 +46,7 @@ $ ip addr show
 sudo yum install -y java-1.8.0-openjdk-devel
 sudo yum install -y wget
 sudo yum install -y zip
+sudo yum install -y psmisc # killall
 
 sudo yum install -y firewalld
 sudo systemctl start firewalld
@@ -188,6 +189,18 @@ $ ./standalone.sh \
     -Djboss.node.name=node2 \
     -Djboss.tx.node.id=txnode2 \
     -Djboss.messaging.cluster.password=Abcd1234
+
+---------------------------------------------------
+# Start Jboss EAP as a Service:
+
+$ sudo cp jboss-eap-7.2/bin/init.d/jbosseap7.service /etc/systemd/system
+
+$ sudo systemctl daemon-reload # Reload the service files to include the new service
+
+$ sudo systemctl start jbosseap7.service
+
+$ sudo systemctl enable jbosseap7.service # To enable the service on every reboot
+
 ```
 
 # Security Group Configuration :
