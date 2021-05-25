@@ -113,6 +113,19 @@
                 <suffix value=".yyyy-MM-dd"/>
                 <append value="true"/>
             </periodic-rotating-file-handler>
+            <!-- periodic-size-rotating-file-handler props:
+                    max-backup-index=1(min),2147483647(max)
+             -->
+            <!-- <periodic-size-rotating-file-handler name="FILE" autoflush="true">
+                <formatter>
+                    <named-formatter name="PATTERN"/>
+                </formatter>
+                <file relative-to="jboss.server.log.dir" path="server.log"/>
+                <suffix value=".yyyy-MM-dd"/>
+                <append value="true"/>
+                <rotate-size value="1024k"/> 
+				<max-backup-index value="100"/>
+            </periodic-size-rotating-file-handler> -->
             <logger category="com.arjuna">
                 <level name="WARN"/>
             </logger>
@@ -434,14 +447,12 @@
                 </stack>
                 <stack name="tcp">
                     <transport type="TCP" socket-binding="jgroups-tcp"/>
-                    <!-- Same machine -->
-                    <!-- <protocol type="TCPPING">
-                        <property name="initial_hosts">127.0.0.1[7600],127.0.0.1[7700]</property>
-                        <property name="port_range">0</property>
-                    </protocol> -->
-                    <!-- Different machines -->
                     <protocol type="TCPPING">
-                        <property name="initial_hosts">172.31.46.240[7600],172.31.43.234[7600]</property>
+                        <!-- Same machine -->
+                        <!-- <property name="initial_hosts">127.0.0.1[7600],127.0.0.1[7700]</property> -->
+                        <!-- Different machines -->
+                        <!-- <property name="initial_hosts">172.31.46.240[7600],172.31.43.234[7600]</property> -->
+                        <property name="initial_hosts">${custom.jboss.jgroups.tcp.initial_hosts}</property>
                         <property name="port_range">0</property>
                     </protocol>
                     <!-- <socket-protocol type="MPING" socket-binding="jgroups-mping"/> -->
@@ -454,7 +465,8 @@
                     <protocol type="pbcast.STABLE"/>
                     <auth-protocol type="AUTH">
                         <plain-token>
-                            <shared-secret-reference clear-text="Wxyz1234"/>
+                            <!-- <shared-secret-reference clear-text="Wxyz1234"/> -->
+                            <shared-secret-reference clear-text="${custom.jboss.jgroups.tcp.password:CHANGE ME!!}"/>
                         </plain-token>
                     </auth-protocol>
                     <protocol type="pbcast.GMS"/>

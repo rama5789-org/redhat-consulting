@@ -10,6 +10,10 @@ $ sudo ssh -i "jboss-cluster.pem" -o StrictHostKeyChecking=no -o UserKnownHostsF
 
 $ sudo scp -i "jboss-cluster.pem" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null development.war ec2-user@13.232.247.113:
 
+# How to exit an SSH connection:
+
+enter (~ + .)
+
 ---------------------------------------------
 # EC2 Instance (Server):
 
@@ -116,26 +120,30 @@ public (active)
 
 $ ./standalone.sh \
     --server-config=ec2-standalone-full-ha.xml \
-    -Djboss.bind.address=0.0.0.0 \
-    -Djboss.bind.address.management=0.0.0.0 \
-    -Djboss.bind.address.private=127.0.0.1 \
-    -Djboss.bind.address.unsecure=127.0.0.1 \
-    -Djboss.server.name=server1 \
-    -Djboss.node.name=node1 \
-    -Djboss.tx.node.id=txnode1 \
+    -Djboss.bind.address=`hostname -I` \
+    -Djboss.bind.address.management=`hostname -I` \
+    -Djboss.bind.address.private=`hostname -I` \
+    -Djboss.bind.address.unsecure=`hostname -I` \
+    -Djboss.server.name=Server1-`hostname -I` \
+    -Djboss.node.name=Node1-`hostname -I` \
+    -Djboss.tx.node.id=TxNode1-`hostname -I` \
+    -Dcustom.jboss.jgroups.tcp.initial_hosts=172.31.46.240[7600],172.31.46.240[7700] \
+    -Dcustom.jboss.jgroups.tcp.password=Wxyz1234 \
     -Djboss.messaging.cluster.password=Abcd1234
 
 # Server 2:
 
 $ ./standalone.sh \
     --server-config=ec2-standalone-full-ha.xml \
-    -Djboss.bind.address=0.0.0.0 \
-    -Djboss.bind.address.management=0.0.0.0 \
-    -Djboss.bind.address.private=127.0.0.1 \
-    -Djboss.bind.address.unsecure=127.0.0.1 \
-    -Djboss.server.name=server2 \
-    -Djboss.node.name=node2 \
-    -Djboss.tx.node.id=txnode2 \
+    -Djboss.bind.address=`hostname -I` \
+    -Djboss.bind.address.management=`hostname -I` \
+    -Djboss.bind.address.private=`hostname -I` \
+    -Djboss.bind.address.unsecure=`hostname -I` \
+    -Djboss.server.name=Server2-`hostname -I` \
+    -Djboss.node.name=Node2-`hostname -I` \
+    -Djboss.tx.node.id=TxNode2-`hostname -I` \
+    -Dcustom.jboss.jgroups.tcp.initial_hosts=172.31.46.240[7600],172.31.46.240[7700] \
+    -Dcustom.jboss.jgroups.tcp.password=Wxyz1234 \
     -Djboss.messaging.cluster.password=Abcd1234 \
     -Djboss.socket.binding.port-offset=100
 
@@ -163,13 +171,15 @@ ip-172-31-46-240.ap-south-1.compute.internal
 
 $ ./standalone.sh \
     --server-config=ec2-standalone-full-ha.xml \
-    -Djboss.bind.address=172.31.46.240 \
-    -Djboss.bind.address.management=0.0.0.0 \
-    -Djboss.bind.address.private=172.31.46.240 \
-    -Djboss.bind.address.unsecure=172.31.46.240 \
-    -Djboss.server.name=server1 \
-    -Djboss.node.name=node1 \
-    -Djboss.tx.node.id=txnode1 \
+    -Djboss.bind.address=`hostname -I` \
+    -Djboss.bind.address.management=`hostname -I` \
+    -Djboss.bind.address.private=`hostname -I` \
+    -Djboss.bind.address.unsecure=`hostname -I` \
+    -Djboss.server.name=Server-`hostname -I` \
+    -Djboss.node.name=Node-`hostname -I` \
+    -Djboss.tx.node.id=TxNode-`hostname -I` \
+    -Dcustom.jboss.jgroups.tcp.initial_hosts=172.31.46.240[7600],172.31.43.234[7600] \
+    -Dcustom.jboss.jgroups.tcp.password=Wxyz1234 \
     -Djboss.messaging.cluster.password=Abcd1234
 
 # Server 2:
@@ -181,13 +191,15 @@ ip-172-31-43-234.ap-south-1.compute.internal
 
 $ ./standalone.sh \
     --server-config=ec2-standalone-full-ha.xml \
-    -Djboss.bind.address=172.31.43.234 \
-    -Djboss.bind.address.management=0.0.0.0 \
-    -Djboss.bind.address.private=172.31.43.234 \
-    -Djboss.bind.address.unsecure=172.31.43.234 \
-    -Djboss.server.name=server2 \
-    -Djboss.node.name=node2 \
-    -Djboss.tx.node.id=txnode2 \
+    -Djboss.bind.address=`hostname -I` \
+    -Djboss.bind.address.management=`hostname -I` \
+    -Djboss.bind.address.private=`hostname -I` \
+    -Djboss.bind.address.unsecure=`hostname -I` \
+    -Djboss.server.name=Server-`hostname -I` \
+    -Djboss.node.name=Node-`hostname -I` \
+    -Djboss.tx.node.id=TxNode-`hostname -I` \
+    -Dcustom.jboss.jgroups.tcp.initial_hosts=172.31.46.240[7600],172.31.43.234[7600] \
+    -Dcustom.jboss.jgroups.tcp.password=Wxyz1234 \
     -Djboss.messaging.cluster.password=Abcd1234
 
 ---------------------------------------------------
@@ -197,9 +209,12 @@ $ sudo cp jboss-eap-7.2/bin/init.d/jbosseap7.service /etc/systemd/system
 
 $ sudo systemctl daemon-reload # Reload the service files to include the new service
 
-$ sudo systemctl start jbosseap7.service
+$ sudo systemctl start jbosseap7
 
-$ sudo systemctl enable jbosseap7.service # To enable the service on every reboot
+$ sudo systemctl status jbosseap7
+
+$ sudo systemctl enable jbosseap7 # To enable the service on every reboot
+Created symlink from /etc/systemd/system/multi-user.target.wants/jbosseap7.service to /etc/systemd/system/jbosseap7.service.
 
 ```
 

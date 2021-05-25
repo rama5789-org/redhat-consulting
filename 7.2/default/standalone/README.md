@@ -67,6 +67,8 @@ $ ./standalone.sh \
     -Djboss.server.name=server1 \
     -Djboss.node.name=node1 \
     -Djboss.tx.node.id=txnode1 \
+    -Dcustom.jboss.jgroups.tcp.initial_hosts=127.0.0.1[7600],127.0.0.1[7700] \
+    -Dcustom.jboss.jgroups.tcp.password=Wxyz1234 \
     -Djboss.messaging.cluster.password=Abcd1234 \
     -Djboss.socket.binding.port-offset=100 # adding port offset
 
@@ -75,13 +77,15 @@ $ ./standalone.sh \
 $ ./standalone.sh \
     --server-config=ec2-standalone-full-ha.xml \
     -Djboss.server.base.dir=/mnt/c/MyProgramFiles/RedHat/vertical-cluster/standalone-node1 \
-    -Djboss.bind.address=127.0.0.1 \
-    -Djboss.bind.address.management=0.0.0.0 \
-    -Djboss.bind.address.private=127.0.0.1 \
-    -Djboss.bind.address.unsecure=127.0.0.1 \
-    -Djboss.server.name=server1 \
-    -Djboss.node.name=node1 \
-    -Djboss.tx.node.id=txnode1 \
+    -Djboss.bind.address=`hostname -I` \
+    -Djboss.bind.address.management=`hostname -I` \
+    -Djboss.bind.address.private=`hostname -I` \
+    -Djboss.bind.address.unsecure=`hostname -I` \
+    -Djboss.server.name=Server1-`hostname -I` \
+    -Djboss.node.name=Node1-`hostname -I` \
+    -Djboss.tx.node.id=TxNode1-`hostname -I` \
+    -Dcustom.jboss.jgroups.tcp.initial_hosts=172.26.124.89[7600],172.26.124.89[7700] \
+    -Dcustom.jboss.jgroups.tcp.password=Wxyz1234 \
     -Djboss.messaging.cluster.password=Abcd1234
 
 # Server 2:
@@ -89,13 +93,15 @@ $ ./standalone.sh \
 $ ./standalone.sh \
     --server-config=ec2-standalone-full-ha.xml \
     -Djboss.server.base.dir=/mnt/c/MyProgramFiles/RedHat/vertical-cluster/standalone-node2 \
-    -Djboss.bind.address=127.0.0.1 \
-    -Djboss.bind.address.management=0.0.0.0 \
-    -Djboss.bind.address.private=127.0.0.1 \
-    -Djboss.bind.address.unsecure=127.0.0.1 \
-    -Djboss.server.name=server2 \
-    -Djboss.node.name=node2 \
-    -Djboss.tx.node.id=txnode2 \
+    -Djboss.bind.address=`hostname -I` \
+    -Djboss.bind.address.management=`hostname -I` \
+    -Djboss.bind.address.private=`hostname -I` \
+    -Djboss.bind.address.unsecure=`hostname -I` \
+    -Djboss.server.name=Server2-`hostname -I` \
+    -Djboss.node.name=Node2-`hostname -I` \
+    -Djboss.tx.node.id=TxNode2-`hostname -I` \
+    -Dcustom.jboss.jgroups.tcp.initial_hosts=172.26.124.89[7600],172.26.124.89[7700] \
+    -Dcustom.jboss.jgroups.tcp.password=Wxyz1234 \
     -Djboss.messaging.cluster.password=Abcd1234 \
     -Djboss.socket.binding.port-offset=100
     
