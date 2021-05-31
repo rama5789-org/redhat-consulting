@@ -16,7 +16,7 @@ getHostIP() {
 getHostIP
 
 # constants:
-initial_hosts="172.31.46.240[7600],172.31.43.234[7600]"
+initial_hosts="172.31.32.10[7600],172.31.32.11[7600]"
 messaging_cluster_password="Abcd1234"
 jgroups_tcp_password="Wxyz1234"
 

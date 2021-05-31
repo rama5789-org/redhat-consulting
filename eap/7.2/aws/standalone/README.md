@@ -10,9 +10,9 @@ $ sudo ssh -i "jboss-cluster.pem" -o StrictHostKeyChecking=no -o UserKnownHostsF
 
 $ sudo scp -i "jboss-cluster.pem" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null development.war ec2-user@13.232.247.113:
 
-# How to exit an SSH connection:
+# How to exit an SSH connection if the shell is unresponsive:
 
-enter (~ + .)
+Hit the Enter key, then type ~.
 
 ---------------------------------------------
 # EC2 Instance (Server):
@@ -23,34 +23,46 @@ enter (~ + .)
 - Subnet: subnet-default(ap-south-1a)
 - Security Group: "jboss-cluster-sg"
 
-[ec2-user@ip-172-31-46-240 ~]$ cat /etc/system-release
+[ec2-user@ip-172-31-46-240 ~]$ cat /etc/system-release # /etc/os-release
 Red Hat Enterprise Linux release 8.3 (Ootpa)
+
+# List all Users:
 
 $ cat /etc/hosts
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
 
 $ hostname
-ip-172-31-46-240.ap-south-1.compute.internal
+ip-172-31-32-10.ap-south-1.compute.internal
 $ hostname -I
-172.31.46.240
+172.31.32.10
 
 $ ip addr show
 ::::::::
 2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 9001 qdisc fq_codel state UP group default qlen 1000
     link/ether 02:d9:ca:2e:01:74 brd ff:ff:ff:ff:ff:ff
-    inet 172.31.46.240/20 brd 172.31.47.255 scope global dynamic noprefixroute eth0
+    inet 172.31.32.10/20 brd 172.31.47.255 scope global dynamic noprefixroute eth0
 ::::::::
+
+# List all Users:
+
+$ cat /etc/passwd
+$ awk -F: '{ print $1}' /etc/passwd
+$ cut -d: -f1 /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+:::::::::
+ec2-user:x:1000:1000:Cloud User:/home/ec2-user:/bin/bash
 
 ---------------------------------------------
 # Startup scripts:
 
 #!/bin/bash
 # sudo yum update -y
-sudo yum install -y java-1.8.0-openjdk-devel
+sudo yum install -y java-1.8.0-openjdk.x86_64
 sudo yum install -y wget
 sudo yum install -y zip
 sudo yum install -y psmisc # killall
+sudo yum install -y nano
 
 sudo yum install -y firewalld
 sudo systemctl start firewalld
@@ -66,6 +78,8 @@ sudo systemctl status firewalld
 # Download Jboss-eap-7.2.0
 
 $ wget https://access.cdn.redhat.com/content/origin/files/sha256/65/657cbd07aa87dcf4dc4d8ceb0cdd6e4414a156a75cf14ce2b2a79ade36463482/jboss-eap-7.2.0.zip?_auth_=1620459063_1e13a19aadff0bc2b1f6dfa071a93c75
+
+$ wget https://access.redhat.com/cspdownload/c30184eb7e7b50a08dc651d25910ec0a/60b47b15/JBEAP-7.2.0/jboss-eap-7.2.0.zip
 
 $ unzip jboss-eap-7.2.0.zip* -d .
 # $ rm jboss-eap-7.2.0.zip*
@@ -127,7 +141,7 @@ $ ./standalone.sh \
     -Djboss.server.name=Server1-`hostname -I` \
     -Djboss.node.name=Node1-`hostname -I` \
     -Djboss.tx.node.id=TxNode1-`hostname -I` \
-    -Dcustom.jboss.jgroups.tcp.initial_hosts=172.31.46.240[7600],172.31.46.240[7700] \
+    -Dcustom.jboss.jgroups.tcp.initial_hosts=172.31.32.10[7600],172.31.32.10[7700] \
     -Dcustom.jboss.jgroups.tcp.password=Wxyz1234 \
     -Djboss.messaging.cluster.password=Abcd1234
 
@@ -142,7 +156,7 @@ $ ./standalone.sh \
     -Djboss.server.name=Server2-`hostname -I` \
     -Djboss.node.name=Node2-`hostname -I` \
     -Djboss.tx.node.id=TxNode2-`hostname -I` \
-    -Dcustom.jboss.jgroups.tcp.initial_hosts=172.31.46.240[7600],172.31.46.240[7700] \
+    -Dcustom.jboss.jgroups.tcp.initial_hosts=172.31.32.10[7600],172.31.32.10[7700] \
     -Dcustom.jboss.jgroups.tcp.password=Wxyz1234 \
     -Djboss.messaging.cluster.password=Abcd1234 \
     -Djboss.socket.binding.port-offset=100
@@ -167,7 +181,7 @@ $ sudo killall -9 java
 [ec2-user@ip-172-31-46-240]$ hostname
 ip-172-31-46-240.ap-south-1.compute.internal
 [ec2-user@ip-172-31-46-240]$ hostname -I
-172.31.46.240
+172.31.32.10
 
 $ ./standalone.sh \
     --server-config=ec2-standalone-full-ha.xml \
@@ -178,7 +192,7 @@ $ ./standalone.sh \
     -Djboss.server.name=Server-`hostname -I` \
     -Djboss.node.name=Node-`hostname -I` \
     -Djboss.tx.node.id=TxNode-`hostname -I` \
-    -Dcustom.jboss.jgroups.tcp.initial_hosts=172.31.46.240[7600],172.31.43.234[7600] \
+    -Dcustom.jboss.jgroups.tcp.initial_hosts=172.31.32.10[7600],172.31.32.11[7600] \
     -Dcustom.jboss.jgroups.tcp.password=Wxyz1234 \
     -Djboss.messaging.cluster.password=Abcd1234
 
@@ -187,7 +201,7 @@ $ ./standalone.sh \
 [ec2-user@ip-172-31-43-234]$ hostname
 ip-172-31-43-234.ap-south-1.compute.internal
 [ec2-user@ip-172-31-43-234]$ hostname -I
-172.31.43.234
+172.31.32.11
 
 $ ./standalone.sh \
     --server-config=ec2-standalone-full-ha.xml \
@@ -198,7 +212,7 @@ $ ./standalone.sh \
     -Djboss.server.name=Server-`hostname -I` \
     -Djboss.node.name=Node-`hostname -I` \
     -Djboss.tx.node.id=TxNode-`hostname -I` \
-    -Dcustom.jboss.jgroups.tcp.initial_hosts=172.31.46.240[7600],172.31.43.234[7600] \
+    -Dcustom.jboss.jgroups.tcp.initial_hosts=172.31.32.10[7600],172.31.32.11[7600] \
     -Dcustom.jboss.jgroups.tcp.password=Wxyz1234 \
     -Djboss.messaging.cluster.password=Abcd1234
 
