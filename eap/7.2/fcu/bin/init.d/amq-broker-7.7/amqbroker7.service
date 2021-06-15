@@ -1,0 +1,16 @@
+[Unit]
+Description=AMQ Broker Systemctl Script
+After=syslog.target network.target
+
+[Service]
+Type=simple
+User=jboss-user
+Group=jboss-user
+ExecStart=/eap/DEMO_AMQ_CLUSTER/amq-broker-7.7.0/bin/broker/bin/artemis run
+Restart=on-failure
+RestartSec=5
+TimeoutStartSec=5
+TimeoutStopSec=5
+
+[Install]
+WantedBy=multi-user.target

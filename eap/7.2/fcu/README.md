@@ -45,7 +45,7 @@ https://access.redhat.com/solutions/869823 - cluster view
 https://access.redhat.com/solutions/46373 - sample app to test cluster mode
 https://access.redhat.com/solutions/698063 - Debug logging
 https://access.redhat.com/solutions/3021711 - TCP Clustering
-https://access.redhat.com/solutions/4284751 - The size of duplicate cache detection 
+https://access.redhat.com/solutions/4284751 - The size of duplicate cache detection
 https://access.redhat.com/solutions/337963 -  change the log level jgroups / infinispan
 https://access.redhat.com/solutions/24898 - Enable session replication
 https://access.redhat.com/solutions/3895201 - keystore not found
@@ -66,6 +66,7 @@ https://access.redhat.com/documentation/en-us/red_hat_application_migration_tool
 https://stackoverflow.com/questions/39327229/amq119099-unable-to-authenticate-cluster-user-activemq-cluster-admin-user
 
 ```
+
 # RHEL Commands :
 
 ```sh
@@ -196,7 +197,7 @@ export PATH
 
 # File | Directory transfer from local to remote:
 
-$ scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null development.war rnayak@127.196.215.247:  
+$ scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null development.war rnayak@127.196.215.247:
 Warning: Permanently added '127.196.215.247' (ECDSA) to the list of known hosts.
 rnayak@127.196.215.247,s password:
 development.war                                                                                    100% 5227     7.5KB/s   00:00
@@ -224,8 +225,8 @@ drwxr-xr-x. 12 jboss-user jboss-user  4096 May  6 06:16 EAP-7.2.0-test
 
 # File | Directory transfer from remote to local:
 
-$ scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null rnayak@127.196.215.247:read.txt . 
-$ scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r rnayak@127.196.215.247:configuration . 
+$ scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null rnayak@127.196.215.247:read.txt .
+$ scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r rnayak@127.196.215.247:configuration .
 
 # AWS:
 
@@ -263,7 +264,38 @@ $ zip my.war WEB-INF/web.xml
 $ unzip -p my.war WEB-INF/web.xml
 $ rm -rf WEB-INF/
 
+# File Search inside zip files:
+
+$ for zipfile in $(find . -iname '*.war'); do unzip -l $zipfile | grep '.xml' && echo $zipfile; done;
+::::::::::::::
+      295  2005-08-02 13:26   WEB-INF/jboss-web.xml
+      877  2005-08-02 13:26   WEB-INF/web.xml
+./dir1/counter.war
+     1703  2018-01-29 16:10   WEB-INF/web.xml
+./dir2/development.war
+
+# Text Search inside zip files:
+
+# Extract 'war' files:
+$ for zipfile in $(find . -iname '*.war'); do zipfilePath=`pwd`/$zipfile; unzip -o $zipfile -d /tmp/unzip &> /dev/null && grep -Rn '<distributable' /tmp/unzip/* && echo $zipfilePath; rm -rf /tmp/unzip/; done;
+::::::::::::::
+/tmp/unzip/WEB-INF/web.xml:7:<!--       <distributable /> -->
+/eap/EAP-7.2.0/standalone/deployments/./BrowserWeb.war
+/tmp/unzip/WEB-INF/web.xml:7:<!--       <distributable /> -->
+/eap/EAP-7.2.0/standalone/deployments/./r20qa.war
+$ ll /tmp/unzip
+ls: cannot access '/tmp/unzip': No such file or directory
+
+# Extract 'war' files inside 'ear' files:
+$ for zipfile1 in $(find . -iname '*.ear'); do zipfilePath1=`pwd`/$zipfile1; unzip -o $zipfile1 -d /tmp/unzip1 &> /dev/null; for zipfile2 in $(find /tmp/unzip1/* -iname '*.war'); do unzip -o $zipfile2 -d /tmp/unzip1/unzip2 &> /dev/null && grep -Rn 'TAFJAdmin' /tmp/unzip1/unzip2/* && echo $zipfile2 && echo $zipfilePath1; rm -rf /tmp/unzip1/unzip2/; done; rm -rf /tmp/unzip1/; done;
+::::::::::::::
+/tmp/unzip1/unzip2/WEB-INF/weblogic.xml:9:              <role-name>TAFJAdmin</role-name>
+/tmp/unzip1/unzip2/WEB-INF/weblogic.xml:10:             <principal-name>TAFJAdmin</principal-name>
+/tmp/unzip1/TAFJCobMonitor.war
+/eap/EAP-7.2.0/standalone/deployments/./TAFJJEE_EAR.ear
+
 ```
+
 # Start and Stop JBOSS EAP Manually :
 
 ```sh

@@ -1,0 +1,16 @@
+[Unit]
+Description=JBoss EAP Systemctl Script
+After=NetworkManager.service
+
+[Service]
+Type=simple
+User=jboss-user
+Group=jboss-user
+ExecStart=/bin/sh /eap/DEMO_EAP_CLUSTER/jboss-eap-7.2/bin/init.d/t24-standalone.sh
+Restart=always
+RestartSec=5
+TimeoutStartSec=5
+TimeoutStopSec=5
+
+[Install]
+WantedBy=multi-user.target
