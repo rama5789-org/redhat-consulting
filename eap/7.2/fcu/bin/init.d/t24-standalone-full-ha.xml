@@ -471,7 +471,7 @@
             <server name="default" id-cache-size="2000">
                 <remote-connector name="remote-artemis-1" socket-binding="remote-artemis-1"/>
                 <remote-connector name="remote-artemis-2" socket-binding="remote-artemis-2"/>
-                <pooled-connection-factory name="remote-artemis" entries="java:/RemoteJmsXA java:jboss/RemoteJmsXA java:jboss/DefaultJMSConnectionFactory" connectors="remote-artemis-1 remote-artemis-2" ha="true" user="rama" password="Rama123$" min-pool-size="15" max-pool-size="30" statistics-enabled="true">
+                <pooled-connection-factory name="remote-artemis" entries="java:/RemoteJmsXA java:jboss/RemoteJmsXA java:jboss/DefaultJMSConnectionFactory" connectors="remote-artemis-1 remote-artemis-2" ha="true" user="admin" password="Admin123$" min-pool-size="15" max-pool-size="30" statistics-enabled="true">
                     <inbound-config rebalance-connections="true" setup-attempts="-1" setup-interval="5000"/>
                 </pooled-connection-factory>
             </server>

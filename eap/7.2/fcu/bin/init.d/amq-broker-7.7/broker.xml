@@ -48,6 +48,9 @@ under the License.
       <cluster-user>amq_cluster_user</cluster-user>
       <cluster-password>Abcd1234</cluster-password>
 
+      <graceful-shutdown-enabled>true</graceful-shutdown-enabled>
+      <graceful-shutdown-timeout>30000</graceful-shutdown-timeout>
+
       <persistence-enabled>true</persistence-enabled>
 
       <!-- this could be ASYNCIO, MAPPED, NIO
@@ -75,7 +78,7 @@ under the License.
 
       <journal-file-size>10M</journal-file-size>
 
-<!--
+      <!--
        This value was determined through a calculation.
        Your system could perform 20.83 writes per millisecond
        on the current journal configuration.

@@ -89,6 +89,8 @@ $ ip addr show | grep ens192 -A 2 | head -n 3 | tail -n 1 | awk '{ print $2 }' |
 
 # disk file info:
 
+- https://www.binarytides.com/linux-commands-hardware-info/
+
 [rnayak@FCU-R20QAAPP01 ~]$ df -h
 Filesystem             Size  Used Avail Use% Mounted on
 devtmpfs               3.9G     0  3.9G   0% /dev
@@ -265,34 +267,62 @@ $ unzip -p my.war WEB-INF/web.xml
 $ rm -rf WEB-INF/
 
 # File Search inside zip files:
+# Colors for text are represented by color codes, including, reset = 0, black = 30, red = 31, green = 32, yellow = 33, blue = 34, magenta = 35, cyan = 36, and white = 37.
 
-$ for zipfile in $(find . -iname '*.war'); do unzip -l $zipfile | grep '.xml' && echo $zipfile; done;
+$ for zipfile in $(find . -iname '*.war'); do unzip -l $zipfile | grep '.xml' && echo -e "\e[1;33m **ZIP_FILE_PATH**: ${zipfile} \e[0m"; done;
 ::::::::::::::
       295  2005-08-02 13:26   WEB-INF/jboss-web.xml
       877  2005-08-02 13:26   WEB-INF/web.xml
-./dir1/counter.war
+**ZIP_FILE_PATH**: ./dir1/counter.war
      1703  2018-01-29 16:10   WEB-INF/web.xml
-./dir2/development.war
+**ZIP_FILE_PATH**: ./dir2/development.war
 
 # Text Search inside zip files:
 
 # Extract 'war' files:
-$ for zipfile in $(find . -iname '*.war'); do zipfilePath=`pwd`/$zipfile; unzip -o $zipfile -d /tmp/unzip &> /dev/null && grep -Rn '<distributable' /tmp/unzip/* && echo $zipfilePath; rm -rf /tmp/unzip/; done;
+$ for zipfile in $(find . -iname '*.war'); do zipfilePath=`pwd`/$zipfile; unzip -o $zipfile -d /tmp/unzip &> /dev/null && grep -Rn '<distributable' /tmp/unzip/* && echo -e "\e[1;33m **ZIP_FILE_PATH**: ${zipfilePath} \e[0m"; rm -rf /tmp/unzip/; done;
 ::::::::::::::
 /tmp/unzip/WEB-INF/web.xml:7:<!--       <distributable /> -->
 /eap/EAP-7.2.0/standalone/deployments/./BrowserWeb.war
 /tmp/unzip/WEB-INF/web.xml:7:<!--       <distributable /> -->
-/eap/EAP-7.2.0/standalone/deployments/./r20qa.war
+**ZIP_FILE_PATH**: /eap/EAP-7.2.0/standalone/deployments/./r20qa.war
 $ ll /tmp/unzip
 ls: cannot access '/tmp/unzip': No such file or directory
 
 # Extract 'war' files inside 'ear' files:
-$ for zipfile1 in $(find . -iname '*.ear'); do zipfilePath1=`pwd`/$zipfile1; unzip -o $zipfile1 -d /tmp/unzip1 &> /dev/null; for zipfile2 in $(find /tmp/unzip1/* -iname '*.war'); do unzip -o $zipfile2 -d /tmp/unzip1/unzip2 &> /dev/null && grep -Rn 'TAFJAdmin' /tmp/unzip1/unzip2/* && echo $zipfile2 && echo $zipfilePath1; rm -rf /tmp/unzip1/unzip2/; done; rm -rf /tmp/unzip1/; done;
+$ for zipfile1 in $(find . -iname '*.ear'); do zipfilePath1=`pwd`/$zipfile1; unzip -o $zipfile1 -d /tmp/unzip1 &> /dev/null; for zipfile2 in $(find /tmp/unzip1/* -iname '*.war'); do unzip -o $zipfile2 -d /tmp/unzip1/unzip2 &> /dev/null && grep -Rn 'TAFJAdmin' /tmp/unzip1/unzip2/* && echo -e "\e[1;36m **WAR_FILE_PATH**: ${zipfile2} \e[0m" && echo -e "\e[1;33m **EAR_FILE_PATH**: ${zipfilePath1} \e[0m"; rm -rf /tmp/unzip1/unzip2/; done; rm -rf /tmp/unzip1/; done;
 ::::::::::::::
 /tmp/unzip1/unzip2/WEB-INF/weblogic.xml:9:              <role-name>TAFJAdmin</role-name>
 /tmp/unzip1/unzip2/WEB-INF/weblogic.xml:10:             <principal-name>TAFJAdmin</principal-name>
-/tmp/unzip1/TAFJCobMonitor.war
-/eap/EAP-7.2.0/standalone/deployments/./TAFJJEE_EAR.ear
+**WAR_FILE_PATH**: /tmp/unzip1/TAFJCobMonitor.war
+**EAR_FILE_PATH**: /eap/EAP-7.2.0/standalone/deployments/./TAFJJEE_EAR.ear
+
+########
+# Install 'jd-cli' to decompile .class into .java file:
+# - https://github.com/kwart/jd-cli/releases/tag/jd-cmd-1.1.0.Final
+
+$ sudo unzip jd-cli-1.1.0.Final-dist.zip -d /usr/local/lib/jd-cli
+$ ll /usr/local/lib/jd-cli
+-rwxrwxrwx  1 root root   35141 May 17  2020 LICENSE.txt*
+-rwxr-xr-x  1 root root     123 May 17  2020 jd-cli*
+-rw-rw-r--  1 root root 1633296 May 17  2020 jd-cli.jar
+$ sudo ln -s /usr/local/lib/jd-cli/jd-cli /usr/local/bin/jd-cli # create a symlink to use 'jd-cli'
+$ which jd-cli
+/usr/local/bin/jd-cli
+$ ls -ln /usr/local/bin/jd-cli  # verify the symlink
+lrwxrwxrwx 1 0 0 22 Jun 16 10:50 /usr/local/bin/jd-cli -> /usr/local/lib/jd-cli/jd-cli
+
+# Extract and Decompile 'jar|war' files:
+$ for zipfile in $(find . -iname '*.war'); do zipfilePath=`pwd`/$zipfile; unzip -o $zipfile -d /tmp/unzip &> /dev/null && jd-cli /tmp/unzip &> /dev/null && grep -Rn 'SampleQ2' /tmp/unzip/* && echo -e "\e[1;33m **ZIP_FILE_PATH**: ${zipfilePath} \e[0m"; rm -rf /tmp/unzip/; done;
+
+$ for zipfile in $(find . -iregex '.*\.\(jar\|war\)$'); do zipfilePath=`pwd`/$zipfile; unzip -o $zipfile -d /tmp/unzip &> /dev/null && jd-cli /tmp/unzip &> /dev/null && grep -Rn 'SampleQ2' /tmp/unzip/* && echo -e "\e[1;33m **ZIP_FILE_PATH**: ${zipfilePath} \e[0m"; rm -rf /tmp/unzip/; done;
+Binary file /tmp/unzip/WEB-INF/classes/org/jboss/as/quickstarts/servlet/HelloWorldMDBServletClient2.class matches
+ **ZIP_FILE_PATH**: /eap/DEMO_EAP_CLUSTER/jboss-eap-7.2/standalone/deployments/./helloworld-mdb-producer.war
+Binary file /tmp/unzip/org/jboss/as/quickstarts/mdb/HelloWorldQueueMDB2.class matches
+ **ZIP_FILE_PATH**: /eap/DEMO_EAP_CLUSTER/jboss-eap-7.2/standalone/deployments/./helloworld-mdb-consumer.jar
+
+# Extract and Decompile 'ear' files:
+$ for zipfile1 in $(find . -iname '*.ear'); do zipfilePath1=`pwd`/$zipfile1; unzip -o $zipfile1 -d /tmp/unzip1 &> /dev/null; for zipfile2 in $(find /tmp/unzip1/* -iname '*.war'); do unzip -o $zipfile2 -d /tmp/unzip1/unzip2 &> /dev/null && jd-cli /tmp/unzip1/unzip2 &> /dev/null && grep -Rn 'queue/' /tmp/unzip1/unzip2/* && echo -e "\e[1;36m **WAR_FILE_PATH**: ${zipfile2} \e[0m" && echo -e "\e[1;33m **EAR_FILE_PATH**: ${zipfilePath1} \e[0m"; rm -rf /tmp/unzip1/unzip2/; done; rm -rf /tmp/unzip1/; done;
 
 ```
 

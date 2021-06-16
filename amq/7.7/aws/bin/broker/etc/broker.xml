@@ -89,6 +89,8 @@ under the License.
 
       <!-- ###### Other Configurations ###### -->
       <configuration-file-refresh-period>60000</configuration-file-refresh-period>
+      <graceful-shutdown-enabled>true</graceful-shutdown-enabled>
+      <graceful-shutdown-timeout>30000</graceful-shutdown-timeout>
 
       <persistence-enabled>true</persistence-enabled>
 
