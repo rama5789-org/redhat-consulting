@@ -1,15 +1,15 @@
-#/bin/bash
+#!/bin/bash
 
 hostip="127.0.0.1"
 
 # get assigned private ip:
 getHostIP() {
  echo "pre-while-hostip-$hostip"
- while [ "$hostip" == "127.0.0.1" ]
+ while [ $hostip != "10.20.10.10" ]
   do
    echo "do-hostip-$hostip"
    sleep 5
-   hostip=`hostname -I`
+   hostip=$(hostname -I)
   done
  echo "done-hostip-$hostip"
 }
