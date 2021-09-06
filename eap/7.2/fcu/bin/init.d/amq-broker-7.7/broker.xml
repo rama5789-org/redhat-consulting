@@ -254,6 +254,331 @@ under the License.
                <queue name="jms.queue.SampleQ2"/>
             </anycast>
          </address>
+         <address name="java:/queue/t24OFSQueue">
+            <anycast>
+               <queue name="java:/queue/t24OFSQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24OFSReplyQueue">
+            <anycast>
+               <queue name="java:/queue/t24OFSReplyQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24BROWSERQueue">
+            <anycast>
+               <queue name="java:/queue/t24BROWSERQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24BROWSERReplyQueue">
+            <anycast>
+               <queue name="java:/queue/t24BROWSERReplyQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24ARCMOBQueue">
+            <anycast>
+               <queue name="java:/queue/t24ARCMOBQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24ARCMOBReplyQueue">
+            <anycast>
+               <queue name="java:/queue/t24ARCMOBReplyQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24TWSQueue">
+            <anycast>
+               <queue name="java:/queue/t24TWSQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24TWSReplyQueue">
+            <anycast>
+               <queue name="java:/queue/t24TWSReplyQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24TCIBQueue">
+            <anycast>
+               <queue name="java:/queue/t24TCIBQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24TCIBReplyQueue">
+            <anycast>
+               <queue name="java:/queue/t24TCIBReplyQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24TCIBCORPQueue">
+            <anycast>
+               <queue name="java:/queue/t24TCIBCORPQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24TCIBCORPReplyQueue">
+            <anycast>
+               <queue name="java:/queue/t24TCIBCORPReplyQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24TCIBWEALTHQueue">
+            <anycast>
+               <queue name="java:/queue/t24TCIBWEALTHQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24TCIBWEALTHReplyQueue">
+            <anycast>
+               <queue name="java:/queue/t24TCIBWEALTHReplyQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24CALLATQueue">
+            <anycast>
+               <queue name="java:/queue/t24CALLATQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24CALLATReplyQueue">
+            <anycast>
+               <queue name="java:/queue/t24CALLATReplyQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24AMLQueue">
+            <anycast>
+               <queue name="java:/queue/t24AMLQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24AMLReplyQueue">
+            <anycast>
+               <queue name="java:/queue/t24AMLReplyQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24TPSQueue">
+            <anycast>
+               <queue name="java:/queue/t24TPSQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24TPSReplyQueue">
+            <anycast>
+               <queue name="java:/queue/t24TPSReplyQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24TPSInstInQueue">
+            <anycast>
+               <queue name="java:/queue/t24TPSInstInQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24TPSInstInReplyQueue">
+            <anycast>
+               <queue name="java:/queue/t24TPSInstInReplyQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24SEATQueue">
+            <anycast>
+               <queue name="java:/queue/t24SEATQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24SEATReplyQueue">
+            <anycast>
+               <queue name="java:/queue/t24SEATReplyQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24IFInboundQueue">
+            <anycast>
+               <queue name="java:/queue/t24IFInboundQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24IFOutboundQueue">
+            <anycast>
+               <queue name="java:/queue/t24IFOutboundQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24SWFQueue">
+            <anycast>
+               <queue name="java:/queue/t24SWFQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24SWFReplyQueue">
+            <anycast>
+               <queue name="java:/queue/t24SWFReplyQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24AAIntQueue">
+            <anycast>
+               <queue name="java:/queue/t24AAIntQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24AAIntReplyQueue">
+            <anycast>
+               <queue name="java:/queue/t24AAIntReplyQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24AAExtQueue">
+            <anycast>
+               <queue name="java:/queue/t24AAExtQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24AAExtReplyQueue">
+            <anycast>
+               <queue name="java:/queue/t24AAExtReplyQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24IRISIntQueue">
+            <anycast>
+               <queue name="java:/queue/t24IRISIntQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24IRISIntReplyQueue">
+            <anycast>
+               <queue name="java:/queue/t24IRISIntReplyQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24IRISExtQueue">
+            <anycast>
+               <queue name="java:/queue/t24IRISExtQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24IRISExtReplyQueue">
+            <anycast>
+               <queue name="java:/queue/t24IRISExtReplyQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24DSFPACKAGERQueue">
+            <anycast>
+               <queue name="java:/queue/t24DSFPACKAGERQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24DSFPACKAGERReplyQueue">
+            <anycast>
+               <queue name="java:/queue/t24DSFPACKAGERReplyQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24IRISMetaDataQueue">
+            <anycast>
+               <queue name="java:/queue/t24IRISMetaDataQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24IRISMetaDataReplyQueue">
+            <anycast>
+               <queue name="java:/queue/t24IRISMetaDataReplyQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24EXECQueue">
+            <anycast>
+               <queue name="java:/queue/t24EXECQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24EbillQueue">
+            <anycast>
+               <queue name="java:/queue/t24EbillQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24EbillReplyQueue">
+            <anycast>
+               <queue name="java:/queue/t24EbillReplyQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/MDIREQ">
+            <anycast>
+               <queue name="java:/queue/MDIREQ"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/MDIRESP">
+            <anycast>
+               <queue name="java:/queue/MDIRESP"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/ATMREQ">
+            <anycast>
+               <queue name="java:/queue/ATMREQ"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/ATMRESP">
+            <anycast>
+               <queue name="java:/queue/ATMRESP"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/POSREQ">
+            <anycast>
+               <queue name="java:/queue/POSREQ"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/POSRESP">
+            <anycast>
+               <queue name="java:/queue/POSRESP"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/FHMREQ">
+            <anycast>
+               <queue name="java:/queue/FHMREQ"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/FHMRESP">
+            <anycast>
+               <queue name="java:/queue/FHMRESP"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/PROLENDERREQ">
+            <anycast>
+               <queue name="java:/queue/PROLENDERREQ"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/PROLENDERRES">
+            <anycast>
+               <queue name="java:/queue/PROLENDERRES"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/IVRSYNTREQ">
+            <anycast>
+               <queue name="java:/queue/IVRSYNTREQ"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/IVRSYNTRES">
+            <anycast>
+               <queue name="java:/queue/IVRSYNTRES"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/IVRRES">
+            <anycast>
+               <queue name="java:/queue/IVRRES"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/IVRREQ">
+            <anycast>
+               <queue name="java:/queue/IVRREQ"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24HSMRequestQueue">
+            <anycast>
+               <queue name="java:/queue/t24HSMRequestQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/t24HSMReplyQueue">
+            <anycast>
+               <queue name="java:/queue/t24HSMReplyQueue"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/MDBRESP">
+            <anycast>
+               <queue name="java:/queue/MDBRESP"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/MDBREQ">
+            <anycast>
+               <queue name="java:/queue/MDBREQ"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/EBILLFUTPAYRESP">
+            <anycast>
+               <queue name="java:/queue/EBILLFUTPAYRESP"/>
+            </anycast>
+         </address>
+         <address name="java:/queue/EBILLFUTPAYREQ">
+            <anycast>
+               <queue name="java:/queue/EBILLFUTPAYREQ"/>
+            </anycast>
+         </address>
+         <address name="java:/topic/tecEventsTopic">
+            <anycast>
+               <queue name="java:/topic/tecEventsTopic"/>
+            </anycast>
+         </address>
+         <address name="java:/topic/t24ManagementTopic">
+            <anycast>
+               <queue name="java:/topic/t24ManagementTopic"/>
+            </anycast>
+         </address>
       </addresses>
 
 

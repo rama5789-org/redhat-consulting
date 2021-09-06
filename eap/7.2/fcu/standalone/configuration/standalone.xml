@@ -46,7 +46,7 @@
         <property name="org.apache.catalina.connector.USE_BODY_ENCODING_FOR_QUERY_STRING" value="true"/>
         <property name="jboss.as.management.blocking.timeout" value="10000"/>
         <property name="edgeSystemPropertyUpdaters" value="com.temenos.connect.system.BRPRuntimeProperties"/>
-        <property name="file.encoding" value="UTF-8"/>
+        <property name="file.encoding" value="Cp1252"/>
     </system-properties>
     <management>
         <security-realms>
@@ -261,34 +261,34 @@
                 <singleton default-access-timeout="5000"/>
             </session-bean>
             <mdb>
-                <resource-adapter-ref resource-adapter-name="${ejb.resource-adapter-name:activemq-ra.rar}"/>
+                <resource-adapter-ref resource-adapter-name="activemq-rar.rar"/>
                 <bean-instance-pool-ref pool-name="mdb-strict-max-pool"/>
             </mdb>
             <pools>
                 <bean-instance-pools>
-                    <strict-max-pool name="mdb-strict-max-pool" derive-size="from-cpu-count" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="mdb-strict-max-pool" derive-size="from-worker-pools" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
                     <strict-max-pool name="slsb-strict-max-pool" derive-size="from-worker-pools" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
-                    <strict-max-pool name="ofs-mdb-strict-max-pool" max-pool-size="10" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
-                    <strict-max-pool name="browser-mdb-strict-max-pool" max-pool-size="10" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
-                    <strict-max-pool name="arcmob-mdb-strict-max-pool" max-pool-size="10" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
-                    <strict-max-pool name="tws-mdb-strict-max-pool" max-pool-size="10" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
-                    <strict-max-pool name="tcib-mdb-strict-max-pool" max-pool-size="10" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
-                    <strict-max-pool name="tcibcorp-mdb-strict-max-pool" max-pool-size="10" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
-                    <strict-max-pool name="tcibwealth-mdb-strict-max-pool" max-pool-size="10" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
-                    <strict-max-pool name="callat-mdb-strict-max-pool" max-pool-size="10" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
-                    <strict-max-pool name="aml-mdb-strict-max-pool" max-pool-size="10" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
-                    <strict-max-pool name="tps-mdb-strict-max-pool" max-pool-size="10" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
-                    <strict-max-pool name="seat-mdb-strict-max-pool" max-pool-size="10" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
-                    <strict-max-pool name="phantom-mdb-strict-max-pool" max-pool-size="20" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
-                    <strict-max-pool name="swf-mdb-strict-max-pool" max-pool-size="10" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
-                    <strict-max-pool name="aaint-mdb-strict-max-pool" max-pool-size="10" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
-                    <strict-max-pool name="aaext-mdb-strict-max-pool" max-pool-size="10" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
-                    <strict-max-pool name="irisint-mdb-strict-max-pool" max-pool-size="10" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
-                    <strict-max-pool name="irisext-mdb-strict-max-pool" max-pool-size="10" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
-                    <strict-max-pool name="inst-mdb-strict-max-pool" max-pool-size="10" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
-                    <strict-max-pool name="dsfpackage-mdb-strict-max-pool" max-pool-size="10" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
-                    <strict-max-pool name="irismetadata-mdb-strict-max-pool" max-pool-size="10" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
-                    <strict-max-pool name="management-mdb-strict-max-pool" max-pool-size="1" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="ofs-mdb-strict-max-pool" derive-size="from-worker-pools" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="browser-mdb-strict-max-pool" derive-size="from-worker-pools" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="arcmob-mdb-strict-max-pool" derive-size="from-worker-pools" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="tws-mdb-strict-max-pool" derive-size="from-worker-pools" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="tcib-mdb-strict-max-pool" derive-size="from-worker-pools" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="tcibcorp-mdb-strict-max-pool" derive-size="from-worker-pools" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="tcibwealth-mdb-strict-max-pool" derive-size="from-worker-pools" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="callat-mdb-strict-max-pool" derive-size="from-worker-pools" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="aml-mdb-strict-max-pool" derive-size="from-worker-pools" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="tps-mdb-strict-max-pool" derive-size="from-worker-pools" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="seat-mdb-strict-max-pool" derive-size="from-worker-pools" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="phantom-mdb-strict-max-pool" derive-size="from-worker-pools" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="swf-mdb-strict-max-pool" derive-size="from-worker-pools" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="aaint-mdb-strict-max-pool" derive-size="from-worker-pools" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="aaext-mdb-strict-max-pool" derive-size="from-worker-pools" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="irisint-mdb-strict-max-pool" derive-size="from-worker-pools" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="irisext-mdb-strict-max-pool" derive-size="from-worker-pools" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="inst-mdb-strict-max-pool" derive-size="from-worker-pools" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="dsfpackage-mdb-strict-max-pool" derive-size="from-worker-pools" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="irismetadata-mdb-strict-max-pool" derive-size="from-worker-pools" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
+                    <strict-max-pool name="management-mdb-strict-max-pool" derive-size="from-worker-pools" instance-acquisition-timeout="5" instance-acquisition-timeout-unit="MINUTES"/>
                 </bean-instance-pools>
             </pools>
             <caches>
@@ -312,7 +312,7 @@
             </remote>
             <thread-pools>
                 <thread-pool name="default">
-                    <max-threads count="10"/>
+                    <max-threads count="150"/>
                     <keepalive-time time="100" unit="milliseconds"/>
                 </thread-pool>
             </thread-pools>
@@ -523,74 +523,11 @@
                 </in-vm-acceptor>
                 <jms-queue name="ExpiryQueue" entries="java:/jms/queue/ExpiryQueue"/>
                 <jms-queue name="DLQ" entries="java:/jms/queue/DLQ"/>
-                <jms-queue name="t24OFSQueue" entries="queue/t24OFSQueue java:jboss/exported/jms/queue/t24OFSQueue"/>
-                <jms-queue name="t24OFSReplyQueue" entries="queue/t24OFSReplyQueue java:jboss/exported/jms/queue/t24OFSReplyQueue"/>
-                <jms-queue name="t24BROWSERQueue" entries="queue/t24BROWSERQueue java:jboss/exported/jms/queue/t24BROWSERQueue"/>
-                <jms-queue name="t24BROWSERReplyQueue" entries="queue/t24BROWSERReplyQueue java:jboss/exported/jms/queue/t24BROWSERReplyQueue"/>
-                <jms-queue name="t24ARCMOBQueue" entries="queue/t24ARCMOBQueue java:jboss/exported/jms/queue/t24ARCMOBQueue"/>
-                <jms-queue name="t24ARCMOBReplyQueue" entries="queue/t24ARCMOBReplyQueue java:jboss/exported/jms/queue/t24ARCMOBReplyQueue"/>
-                <jms-queue name="t24TWSQueue" entries="queue/t24TWSQueue java:jboss/exported/jms/queue/t24TWSQueue"/>
-                <jms-queue name="t24TWSReplyQueue" entries="queue/t24TWSReplyQueue java:jboss/exported/jms/queue/t24TWSReplyQueue"/>
-                <jms-queue name="t24TCIBQueue" entries="queue/t24TCIBQueue java:jboss/exported/jms/queue/t24TCIBQueue"/>
-                <jms-queue name="t24TCIBReplyQueue" entries="queue/t24TCIBReplyQueue java:jboss/exported/jms/queue/t24TCIBReplyQueue"/>
-                <jms-queue name="t24TCIBCORPQueue" entries="queue/t24TCIBCORPQueue java:jboss/exported/jms/queue/t24TCIBCORPQueue"/>
-                <jms-queue name="t24TCIBCORPReplyQueue" entries="queue/t24TCIBCORPReplyQueue java:jboss/exported/jms/queue/t24TCIBCORPReplyQueue"/>
-                <jms-queue name="t24TCIBWEALTHQueue" entries="queue/t24TCIBWEALTHQueue java:jboss/exported/jms/queue/t24TCIBWEALTHQueue"/>
-                <jms-queue name="t24TCIBWEALTHReplyQueue" entries="queue/t24TCIBWEALTHReplyQueue java:jboss/exported/jms/queue/t24TCIBWEALTHReplyQueue"/>
-                <jms-queue name="t24CALLATQueue" entries="queue/t24CALLATQueue java:jboss/exported/jms/queue/t24CALLATQueue"/>
-                <jms-queue name="t24CALLATReplyQueue" entries="queue/t24CALLATReplyQueue java:jboss/exported/jms/queue/t24CALLATReplyQueue"/>
-                <jms-queue name="t24AMLQueue" entries="queue/t24AMLQueue java:jboss/exported/jms/queue/t24AMLQueue"/>
-                <jms-queue name="t24AMLReplyQueue" entries="queue/t24AMLReplyQueue java:jboss/exported/jms/queue/t24AMLReplyQueue"/>
-                <jms-queue name="t24TPSQueue" entries="queue/t24TPSQueue java:jboss/exported/jms/queue/t24TPSQueue"/>
-                <jms-queue name="t24TPSReplyQueue" entries="queue/t24TPSReplyQueue java:jboss/exported/jms/queue/t24TPSReplyQueue"/>
-                <jms-queue name="t24TPSInstInQueue" entries="queue/t24TPSInstInQueue java:jboss/exported/jms/queue/t24TPSInstInQueue"/>
-                <jms-queue name="t24TPSInstInReplyQueue" entries="queue/t24TPSInstInReplyQueue java:jboss/exported/jms/queue/t24TPSInstInReplyQueue"/>
-                <jms-queue name="t24SEATQueue" entries="queue/t24SEATQueue java:jboss/exported/jms/queue/t24SEATQueue"/>
-                <jms-queue name="t24SEATReplyQueue" entries="queue/t24SEATReplyQueue java:jboss/exported/jms/queue/t24SEATReplyQueue"/>
-                <jms-queue name="t24IFInboundQueue" entries="queue/t24IFInboundQueue java:jboss/exported/jms/queue/t24IFInboundQueue"/>
-                <jms-queue name="t24IFOutboundQueue" entries="queue/t24IFOutboundQueue java:jboss/exported/jms/queue/t24IFOutboundQueue"/>
-                <jms-queue name="t24SWFQueue" entries="queue/t24SWFQueue java:jboss/exported/jms/queue/t24SWFQueue"/>
-                <jms-queue name="t24SWFReplyQueue" entries="queue/t24SWFReplyQueue java:jboss/exported/jms/queue/t24SWFReplyQueue"/>
-                <jms-queue name="t24AAIntQueue" entries="queue/t24AAIntQueue java:jboss/exported/jms/queue/t24AAIntQueue"/>
-                <jms-queue name="t24AAIntReplyQueue" entries="queue/t24AAIntReplyQueue java:jboss/exported/jms/queue/t24AAIntReplyQueue"/>
-                <jms-queue name="t24AAExtQueue" entries="queue/t24AAExtQueue java:jboss/exported/jms/queue/t24AAExtQueue"/>
-                <jms-queue name="t24AAExtReplyQueue" entries="queue/t24AAExtReplyQueue java:jboss/exported/jms/queue/t24AAExtReplyQueue"/>
-                <jms-queue name="t24IRISIntQueue" entries="queue/t24IRISIntQueue java:jboss/exported/jms/queue/t24IRISIntQueue"/>
-                <jms-queue name="t24IRISIntReplyQueue" entries="queue/t24IRISIntReplyQueue java:jboss/exported/jms/queue/t24IRISIntReplyQueue"/>
-                <jms-queue name="t24IRISExtQueue" entries="queue/t24IRISExtQueue java:jboss/exported/jms/queue/t24IRISExtQueue"/>
-                <jms-queue name="t24IRISExtReplyQueue" entries="queue/t24IRISExtReplyQueue java:jboss/exported/jms/queue/t24IRISExtReplyQueue"/>
-                <jms-queue name="t24DSFPACKAGERQueue" entries="queue/t24DSFPACKAGERQueue java:jboss/exported/jms/queue/t24DSFPACKAGERQueue"/>
-                <jms-queue name="t24DSFPACKAGERReplyQueue" entries="queue/t24DSFPACKAGERReplyQueue java:jboss/exported/jms/queue/t24DSFPACKAGERReplyQueue"/>
-                <jms-queue name="t24IRISMetaDataQueue" entries="queue/t24IRISMetaDataQueue java:jboss/exported/jms/queue/t24IRISMetaDataQueue"/>
-                <jms-queue name="t24IRISMetaDataReplyQueue" entries="queue/t24IRISMetaDataReplyQueue java:jboss/exported/jms/queue/t24IRISMetaDataReplyQueue"/>
-                <jms-queue name="t24EXECQueue" entries="queue/t24EXECQueue java:jboss/exported/jms/queue/t24EXECQueue"/>
-                <jms-queue name="t24EbillQueue" entries="queue/t24EbillQueue java:jboss/exported/jms/queue/t24EbillQueue"/>
-                <jms-queue name="t24EbillReplyQueue" entries="queue/t24EbillReplyQueue java:jboss/exported/jms/queue/t24EbillReplyQueue"/>
-                <jms-queue name="MDIREQ" entries="queue/MDIREQ java:jboss/exported/jms/queue/MDIREQ"/>
-                <jms-queue name="MDIRESP" entries="queue/MDIRESP java:jboss/exported/jms/queue/MDIRESP"/>
-                <jms-queue name="ATMREQ" entries="queue/ATMREQ java:jboss/exported/jms/queue/ATMREQ"/>
-                <jms-queue name="ATMRESP" entries="queue/ATMRESP java:jboss/exported/jms/queue/ATMRESP"/>
-                <jms-queue name="POSREQ" entries="queue/POSREQ java:jboss/exported/jms/queue/POSREQ"/>
-                <jms-queue name="POSRESP" entries="queue/POSRESP java:jboss/exported/jms/queue/POSRESP"/>
-                <jms-queue name="FHMREQ" entries="queue/FHMREQ java:jboss/exported/jms/queue/FHMREQ"/>
-                <jms-queue name="FHMRESP" entries="queue/FHMRESP java:jboss/exported/jms/queue/FHMRESP"/>
-                <jms-queue name="PROLENDERREQ" entries="queue/PROLENDERREQ java:jboss/exported/jms/queue/PROLENDERREQ"/>
-                <jms-queue name="PROLENDERRES" entries="queue/PROLENDERRES java:jboss/exported/jms/queue/PROLENDERRES"/>
-                <jms-queue name="IVRSYNTREQ" entries="queue/IVRSYNTREQ java:jboss/exported/jms/queue/IVRSYNTREQ"/>
-                <jms-queue name="IVRSYNTRES" entries="queue/IVRSYNTRES java:jboss/exported/jms/queue/IVRSYNTRES"/>
-                <jms-queue name="IVRRES" entries="queue/IVRRES java:jboss/exported/jms/queue/IVRRES"/>
-                <jms-queue name="IVRREQ" entries="queue/IVRREQ java:jboss/exported/jms/queue/IVRREQ"/>
-                <jms-queue name="t24HSMRequestQueue" entries="queue/t24HSMRequestQueue java:jboss/exported/jms/queue/t24HSMRequestQueue"/>
-                <jms-queue name="t24HSMReplyQueue" entries="queue/t24HSMReplyQueue java:jboss/exported/jms/queue/t24HSMReplyQueue"/>
-                <jms-queue name="MDBRESP" entries="queue/MDBRESP java:jboss/exported/jms/queue/MDBRESP"/>
-                <jms-queue name="MDBREQ" entries="queue/MDBREQ java:jboss/exported/jms/queue/MDBREQ"/>
-                <jms-queue name="EBILLFUTPAYRESP" entries="queue/EBILLFUTPAYRESP java:jboss/exported/jms/queue/EBILLFUTPAYRESP"/>
-                <jms-queue name="EBILLFUTPAYREQ" entries="queue/EBILLFUTPAYREQ java:jboss/exported/jms/queue/EBILLFUTPAYREQ"/>
-                <jms-topic name="tecEventsTopic" entries="topic/tecEventsTopic java:jboss/exported/jms/topic/tecEventsTopic"/>
                 <jms-topic name="t24ManagementTopic" entries="topic/t24ManagementTopic java:jboss/exported/jms/topic/t24ManagementTopic"/>
-                <connection-factory name="InVmConnectionFactory" entries="java:/ConnectionFactory" connectors="in-vm"/>
+                <jms-topic name="tecEventsTopic" entries="topic/tecEventsTopic java:jboss/exported/jms/topic/tecEventsTopic"/>
+                <connection-factory name="InVmConnectionFactory" entries="java:/ConnectionFactory_DUMMY" connectors="in-vm"/>
                 <connection-factory name="RemoteConnectionFactory" entries="java:jboss/exported/jms/RemoteConnectionFactory" connectors="http-connector"/>
-                <pooled-connection-factory name="activemq-ra" entries="java:/JmsXA java:jboss/DefaultJMSConnectionFactory" connectors="in-vm" transaction="xa"/>
+                <pooled-connection-factory name="activemq-ra" entries="java:/JmsXA_notused java:jboss/DefaultJMSConnectionFactory" connectors="in-vm" transaction="xa"/>
             </server>
         </subsystem>
         <subsystem xmlns="urn:wildfly:microprofile-config-smallrye:1.0"/>
@@ -604,7 +541,358 @@
             <http-connector name="http-remoting-connector" connector-ref="default" security-realm="ApplicationRealm"/>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:request-controller:1.0"/>
-        <subsystem xmlns="urn:jboss:domain:resource-adapters:5.0"/>
+        <subsystem xmlns="urn:jboss:domain:resource-adapters:5.0">
+            <resource-adapters>
+                <resource-adapter id="activemq-rar.rar">
+                    <archive>
+                        activemq-rar.rar
+                    </archive>
+                    <transaction-support>XATransaction</transaction-support>
+                    <config-property name="ServerUrl">
+                        failover:(tcp://10.20.10.14:61616?soLinger=0)
+                    </config-property>
+                    <config-property name="UserName">
+                        admin
+                    </config-property>
+                    <config-property name="Password">
+                        Admin123$
+                    </config-property>
+                    <connection-definitions>
+                        <connection-definition class-name="org.apache.activemq.ra.ActiveMQManagedConnectionFactory" jndi-name="java:/ConnectionFactory" enabled="true" pool-name="ConnectionFactory">
+                            <xa-pool>
+                                <min-pool-size>1</min-pool-size>
+                                <max-pool-size>50</max-pool-size>
+                                <prefill>false</prefill>
+                                <is-same-rm-override>false</is-same-rm-override>
+                            </xa-pool>
+                            <recovery>
+                                <recover-credential>
+                                    <user-name>admin</user-name>
+                                    <password>Admin123$</password>
+                                </recover-credential>
+                            </recovery>
+                        </connection-definition>
+                    </connection-definitions>
+                    <admin-objects>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24AAIntQueue" use-java-context="true" pool-name="t24AAIntQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24AAIntQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24IRISExtReplyQueue" use-java-context="true" pool-name="t24IRISExtReplyQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24IRISExtReplyQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/MDIRESP" use-java-context="true" pool-name="MDIRESP">
+                            <config-property name="PhysicalName">
+                                java:/queue/MDIRESP
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24ARCMOBReplyQueue" use-java-context="true" pool-name="t24ARCMOBReplyQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24ARCMOBReplyQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24HSMReplyQueue" use-java-context="true" pool-name="t24HSMReplyQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24HSMReplyQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24AAExtQueue" use-java-context="true" pool-name="t24AAExtQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24AAExtQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24TCIBCORPReplyQueue" use-java-context="true" pool-name="t24TCIBCORPReplyQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24TCIBCORPReplyQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/PROLENDERRES" use-java-context="true" pool-name="PROLENDERRES">
+                            <config-property name="PhysicalName">
+                                java:/queue/PROLENDERRES
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24CALLATReplyQueue" use-java-context="true" pool-name="t24CALLATReplyQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24CALLATReplyQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24DSFPACKAGERQueue" use-java-context="true" pool-name="t24DSFPACKAGERQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24DSFPACKAGERQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/PROLENDERREQ" use-java-context="true" pool-name="PROLENDERREQ">
+                            <config-property name="PhysicalName">
+                                java:/queue/PROLENDERREQ
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24HSMRequestQueue" use-java-context="true" pool-name="t24HSMRequestQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24HSMRequestQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24EbillQueue" use-java-context="true" pool-name="t24EbillQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24EbillQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24AMLQueue" use-java-context="true" pool-name="t24AMLQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24AMLQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/FHMRESP" use-java-context="true" pool-name="FHMRESP">
+                            <config-property name="PhysicalName">
+                                java:/queue/FHMRESP
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24TPSQueue" use-java-context="true" pool-name="t24TPSQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24TPSQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24DSFPACKAGERReplyQueue" use-java-context="true" pool-name="t24DSFPACKAGERReplyQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24DSFPACKAGERReplyQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24OFSReplyQueue" use-java-context="true" pool-name="t24OFSReplyQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24OFSReplyQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24TWSQueue" use-java-context="true" pool-name="t24TWSQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24TWSQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24TPSInstInReplyQueue" use-java-context="true" pool-name="t24TPSInstInReplyQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24TPSInstInReplyQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24SWFQueue" use-java-context="true" pool-name="t24SWFQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24SWFQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24TCIBCORPQueue" use-java-context="true" pool-name="t24TCIBCORPQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24TCIBCORPQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24BROWSERReplyQueue" use-java-context="true" pool-name="t24BROWSERReplyQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24BROWSERReplyQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24IFOutboundQueue" use-java-context="true" pool-name="t24IFOutboundQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24IFOutboundQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24CALLATQueue" use-java-context="true" pool-name="t24CALLATQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24CALLATQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24TCIBWEALTHReplyQueue" use-java-context="true" pool-name="t24TCIBWEALTHReplyQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24TCIBWEALTHReplyQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24IRISIntReplyQueue" use-java-context="true" pool-name="t24IRISIntReplyQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24IRISIntReplyQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24TCIBWEALTHQueue" use-java-context="true" pool-name="t24TCIBWEALTHQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24TCIBWEALTHQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24TPSInstInQueue" use-java-context="true" pool-name="t24TPSInstInQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24TPSInstInQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/POSREQ" use-java-context="true" pool-name="POSREQ">
+                            <config-property name="PhysicalName">
+                                java:/queue/POSREQ
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/MDBRESP" use-java-context="true" pool-name="MDBRESP">
+                            <config-property name="PhysicalName">
+                                java:/queue/MDBRESP
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/MDBREQ" use-java-context="true" pool-name="MDBREQ">
+                            <config-property name="PhysicalName">
+                                java:/queue/MDBREQ
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24EbillReplyQueue" use-java-context="true" pool-name="t24EbillReplyQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24EbillReplyQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24OFSQueue" use-java-context="true" pool-name="t24OFSQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24OFSQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24SEATReplyQueue" use-java-context="true" pool-name="t24SEATReplyQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24SEATReplyQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24TCIBQueue" use-java-context="true" pool-name="t24TCIBQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24TCIBQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/FHMREQ" use-java-context="true" pool-name="FHMREQ">
+                            <config-property name="PhysicalName">
+                                java:/queue/FHMREQ
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24IRISMetaDataQueue" use-java-context="true" pool-name="t24IRISMetaDataQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24IRISMetaDataQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24BROWSERQueue" use-java-context="true" pool-name="t24BROWSERQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24BROWSERQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24TCIBReplyQueue" use-java-context="true" pool-name="t24TCIBReplyQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24TCIBReplyQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24AAExtReplyQueue" use-java-context="true" pool-name="t24AAExtReplyQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24AAExtReplyQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/ATMRESP" use-java-context="true" pool-name="ATMRESP">
+                            <config-property name="PhysicalName">
+                                java:/queue/ATMRESP
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24SWFReplyQueue" use-java-context="true" pool-name="t24SWFReplyQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24SWFReplyQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/MDIREQ" use-java-context="true" pool-name="MDIREQ">
+                            <config-property name="PhysicalName">
+                                java:/queue/MDIREQ
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/IVRSYNTRES" use-java-context="true" pool-name="IVRSYNTRES">
+                            <config-property name="PhysicalName">
+                                java:/queue/IVRSYNTRES
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/ATMREQ" use-java-context="true" pool-name="ATMREQ">
+                            <config-property name="PhysicalName">
+                                java:/queue/ATMREQ
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/IVRSYNTREQ" use-java-context="true" pool-name="IVRSYNTREQ">
+                            <config-property name="PhysicalName">
+                                java:/queue/IVRSYNTREQ
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24IRISIntQueue" use-java-context="true" pool-name="t24IRISIntQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24IRISIntQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/IVRREQ" use-java-context="true" pool-name="IVRREQ">
+                            <config-property name="PhysicalName">
+                                java:/queue/IVRREQ
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24IRISMetaDataReplyQueue" use-java-context="true" pool-name="t24IRISMetaDataReplyQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24IRISMetaDataReplyQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/IVRRES" use-java-context="true" pool-name="IVRRES">
+                            <config-property name="PhysicalName">
+                                java:/queue/IVRRES
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24TPSReplyQueue" use-java-context="true" pool-name="t24TPSReplyQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24TPSReplyQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24ARCMOBQueue" use-java-context="true" pool-name="t24ARCMOBQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24ARCMOBQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24AAIntReplyQueue" use-java-context="true" pool-name="t24AAIntReplyQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24AAIntReplyQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/EBILLFUTPAYRESP" use-java-context="true" pool-name="EBILLFUTPAYRESP">
+                            <config-property name="PhysicalName">
+                                java:/queue/EBILLFUTPAYRESP
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24TWSReplyQueue" use-java-context="true" pool-name="t24TWSReplyQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24TWSReplyQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24EXECQueue" use-java-context="true" pool-name="t24EXECQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24EXECQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24AMLReplyQueue" use-java-context="true" pool-name="t24AMLReplyQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24AMLReplyQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24SEATQueue" use-java-context="true" pool-name="t24SEATQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24SEATQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24IRISExtQueue" use-java-context="true" pool-name="t24IRISExtQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24IRISExtQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/t24IFInboundQueue" use-java-context="true" pool-name="t24IFInboundQueue">
+                            <config-property name="PhysicalName">
+                                java:/queue/t24IFInboundQueue
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/POSRESP" use-java-context="true" pool-name="POSRESP">
+                            <config-property name="PhysicalName">
+                                java:/queue/POSRESP
+                            </config-property>
+                        </admin-object>
+                        <admin-object class-name="org.apache.activemq.command.ActiveMQQueue" jndi-name="java:/queue/EBILLFUTPAYREQ" use-java-context="true" pool-name="EBILLFUTPAYREQ">
+                            <config-property name="PhysicalName">
+                                java:/queue/EBILLFUTPAYREQ
+                            </config-property>
+                        </admin-object>
+                    </admin-objects>
+                </resource-adapter>
+            </resource-adapters>
+        </subsystem>
         <subsystem xmlns="urn:jboss:domain:sar:1.0"/>
         <subsystem xmlns="urn:jboss:domain:security:2.0">
             <security-domains>
@@ -659,7 +947,7 @@
             <buffer-cache name="default"/>
             <server name="default-server">
                 <http-listener name="default" socket-binding="http" max-parameters="10000" redirect-socket="https" enable-http2="true"/>
-                <https-listener name="https" socket-binding="https" security-realm="ApplicationRealm" enable-http2="true"/>
+                <https-listener name="https" socket-binding="https" max-parameters="10000" security-realm="ApplicationRealm" enable-http2="true"/>
                 <host name="default-host" alias="localhost">
                     <location name="/" handler="welcome-content"/>
                     <http-invoker security-realm="ApplicationRealm"/>
