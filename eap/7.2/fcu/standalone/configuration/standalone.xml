@@ -261,7 +261,7 @@
                 <singleton default-access-timeout="5000"/>
             </session-bean>
             <mdb>
-                <resource-adapter-ref resource-adapter-name="activemq-rar.rar"/>
+                <resource-adapter-ref resource-adapter-name="${ejb.resource-adapter-name:activemq-ra.rar}"/>
                 <bean-instance-pool-ref pool-name="mdb-strict-max-pool"/>
             </mdb>
             <pools>
@@ -499,7 +499,7 @@
                 <smtp-server outbound-socket-binding-ref="mail-smtp"/>
             </mail-session>
         </subsystem>
-        <subsystem xmlns="urn:jboss:domain:messaging-activemq:4.0">
+        <!-- <subsystem xmlns="urn:jboss:domain:messaging-activemq:4.0">
             <server name="default">
                 <journal pool-files="10"/>
                 <security-setting name="#">
@@ -529,11 +529,159 @@
                 <connection-factory name="RemoteConnectionFactory" entries="java:jboss/exported/jms/RemoteConnectionFactory" connectors="http-connector"/>
                 <pooled-connection-factory name="activemq-ra" entries="java:/JmsXA_notused java:jboss/DefaultJMSConnectionFactory" connectors="in-vm" transaction="xa"/>
             </server>
+        </subsystem> -->
+        <subsystem xmlns="urn:jboss:domain:messaging-activemq:4.0">
+            <server name="default" id-cache-size="2000">
+                <remote-connector name="remote-artemis-1" socket-binding="remote-artemis-1"/>
+                <remote-connector name="remote-artemis-2" socket-binding="remote-artemis-2"/>
+                <jms-topic name="t24ManagementTopic" entries="topic/t24ManagementTopic java:jboss/exported/jms/topic/t24ManagementTopic"/>
+                <jms-topic name="tecEventsTopic" entries="topic/tecEventsTopic java:jboss/exported/jms/topic/tecEventsTopic"/>
+                <pooled-connection-factory name="activemq-ra.rar" entries="java:/ConnectionFactory java:/RemoteJmsXA java:jboss/RemoteJmsXA java:jboss/DefaultJMSConnectionFactory" connectors="remote-artemis-1 remote-artemis-2" ha="true" user="admin" password="Admin123$" min-pool-size="15" max-pool-size="30" statistics-enabled="true">
+                    <inbound-config rebalance-connections="true" setup-attempts="-1" setup-interval="5000"/>
+                </pooled-connection-factory>
+            </server>
         </subsystem>
         <subsystem xmlns="urn:wildfly:microprofile-config-smallrye:1.0"/>
         <subsystem xmlns="urn:wildfly:microprofile-health-smallrye:1.0" security-enabled="false"/>
         <subsystem xmlns="urn:wildfly:microprofile-opentracing-smallrye:1.0"/>
+        <!-- <subsystem xmlns="urn:jboss:domain:naming:2.0">
+            <remote-naming/>
+        </subsystem> -->
         <subsystem xmlns="urn:jboss:domain:naming:2.0">
+            <bindings>
+                <external-context name="java:global/remoteContext" module="org.apache.activemq.artemis" class="javax.naming.InitialContext">
+                    <environment>
+                        <property name="java.naming.factory.initial" value="org.apache.activemq.artemis.jndi.ActiveMQInitialContextFactory"/>
+                        <property name="queue.SampleQ" value="SampleQ"/>
+                        <property name="queue.t24AAIntQueue" value="java:/queue/t24AAIntQueue"/>
+                        <property name="queue.t24IRISExtReplyQueue" value="java:/queue/t24IRISExtReplyQueue"/>
+                        <property name="queue.MDIRESP" value="java:/queue/MDIRESP"/>
+                        <property name="queue.t24ARCMOBReplyQueue" value="java:/queue/t24ARCMOBReplyQueue"/>
+                        <property name="queue.t24HSMReplyQueue" value="java:/queue/t24HSMReplyQueue"/>
+                        <property name="queue.t24AAExtQueue" value="java:/queue/t24AAExtQueue"/>
+                        <property name="queue.t24TCIBCORPReplyQueue" value="java:/queue/t24TCIBCORPReplyQueue"/>
+                        <property name="queue.PROLENDERRES" value="java:/queue/PROLENDERRES"/>
+                        <property name="queue.t24CALLATReplyQueue" value="java:/queue/t24CALLATReplyQueue"/>
+                        <property name="queue.t24DSFPACKAGERQueue" value="java:/queue/t24DSFPACKAGERQueue"/>
+                        <property name="queue.PROLENDERREQ" value="java:/queue/PROLENDERREQ"/>
+                        <property name="queue.t24HSMRequestQueue" value="java:/queue/t24HSMRequestQueue"/>
+                        <property name="queue.t24EbillQueue" value="java:/queue/t24EbillQueue"/>
+                        <property name="queue.t24AMLQueue" value="java:/queue/t24AMLQueue"/>
+                        <property name="queue.FHMRESP" value="java:/queue/FHMRESP"/>
+                        <property name="queue.t24TPSQueue" value="java:/queue/t24TPSQueue"/>
+                        <property name="queue.t24DSFPACKAGERReplyQueue" value="java:/queue/t24DSFPACKAGERReplyQueue"/>
+                        <property name="queue.t24OFSReplyQueue" value="java:/queue/t24OFSReplyQueue"/>
+                        <property name="queue.t24TWSQueue" value="java:/queue/t24TWSQueue"/>
+                        <property name="queue.t24TPSInstInReplyQueue" value="java:/queue/t24TPSInstInReplyQueue"/>
+                        <property name="queue.t24SWFQueue" value="java:/queue/t24SWFQueue"/>
+                        <property name="queue.t24TCIBCORPQueue" value="java:/queue/t24TCIBCORPQueue"/>
+                        <property name="queue.t24BROWSERReplyQueue" value="java:/queue/t24BROWSERReplyQueue"/>
+                        <property name="queue.t24IFOutboundQueue" value="java:/queue/t24IFOutboundQueue"/>
+                        <property name="queue.t24CALLATQueue" value="java:/queue/t24CALLATQueue"/>
+                        <property name="queue.t24TCIBWEALTHReplyQueue" value="java:/queue/t24TCIBWEALTHReplyQueue"/>
+                        <property name="queue.t24IRISIntReplyQueue" value="java:/queue/t24IRISIntReplyQueue"/>
+                        <property name="queue.t24TCIBWEALTHQueue" value="java:/queue/t24TCIBWEALTHQueue"/>
+                        <property name="queue.t24TPSInstInQueue" value="java:/queue/t24TPSInstInQueue"/>
+                        <property name="queue.POSREQ" value="java:/queue/POSREQ"/>
+                        <property name="queue.MDBRESP" value="java:/queue/MDBRESP"/>
+                        <property name="queue.MDBREQ" value="java:/queue/MDBREQ"/>
+                        <property name="queue.t24EbillReplyQueue" value="java:/queue/t24EbillReplyQueue"/>
+                        <property name="queue.t24OFSQueue" value="java:/queue/t24OFSQueue"/>
+                        <property name="queue.t24SEATReplyQueue" value="java:/queue/t24SEATReplyQueue"/>
+                        <property name="queue.t24TCIBQueue" value="java:/queue/t24TCIBQueue"/>
+                        <property name="queue.FHMREQ" value="java:/queue/FHMREQ"/>
+                        <property name="queue.t24IRISMetaDataQueue" value="java:/queue/t24IRISMetaDataQueue"/>
+                        <property name="queue.t24BROWSERQueue" value="java:/queue/t24BROWSERQueue"/>
+                        <property name="queue.t24TCIBReplyQueue" value="java:/queue/t24TCIBReplyQueue"/>
+                        <property name="queue.t24AAExtReplyQueue" value="java:/queue/t24AAExtReplyQueue"/>
+                        <property name="queue.ATMRESP" value="java:/queue/ATMRESP"/>
+                        <property name="queue.t24SWFReplyQueue" value="java:/queue/t24SWFReplyQueue"/>
+                        <property name="queue.MDIREQ" value="java:/queue/MDIREQ"/>
+                        <property name="queue.IVRSYNTRES" value="java:/queue/IVRSYNTRES"/>
+                        <property name="queue.ATMREQ" value="java:/queue/ATMREQ"/>
+                        <property name="queue.IVRSYNTREQ" value="java:/queue/IVRSYNTREQ"/>
+                        <property name="queue.t24IRISIntQueue" value="java:/queue/t24IRISIntQueue"/>
+                        <property name="queue.IVRREQ" value="java:/queue/IVRREQ"/>
+                        <property name="queue.t24IRISMetaDataReplyQueue" value="java:/queue/t24IRISMetaDataReplyQueue"/>
+                        <property name="queue.IVRRES" value="java:/queue/IVRRES"/>
+                        <property name="queue.t24TPSReplyQueue" value="java:/queue/t24TPSReplyQueue"/>
+                        <property name="queue.t24ARCMOBQueue" value="java:/queue/t24ARCMOBQueue"/>
+                        <property name="queue.t24AAIntReplyQueue" value="java:/queue/t24AAIntReplyQueue"/>
+                        <property name="queue.EBILLFUTPAYRESP" value="java:/queue/EBILLFUTPAYRESP"/>
+                        <property name="queue.t24TWSReplyQueue" value="java:/queue/t24TWSReplyQueue"/>
+                        <property name="queue.t24EXECQueue" value="java:/queue/t24EXECQueue"/>
+                        <property name="queue.t24AMLReplyQueue" value="java:/queue/t24AMLReplyQueue"/>
+                        <property name="queue.t24SEATQueue" value="java:/queue/t24SEATQueue"/>
+                        <property name="queue.t24IRISExtQueue" value="java:/queue/t24IRISExtQueue"/>
+                        <property name="queue.t24IFInboundQueue" value="java:/queue/t24IFInboundQueue"/>
+                        <property name="queue.POSRESP" value="java:/queue/POSRESP"/>
+                        <property name="queue.EBILLFUTPAYREQ" value="java:/queue/EBILLFUTPAYREQ"/>
+                    </environment>
+                </external-context>
+                <lookup name="java:/queue/t24AAIntQueue" lookup="java:global/remoteContext/t24AAIntQueue"/>
+                <lookup name="java:/queue/t24IRISExtReplyQueue" lookup="java:global/remoteContext/t24IRISExtReplyQueue"/>
+                <lookup name="java:/queue/MDIRESP" lookup="java:global/remoteContext/MDIRESP"/>
+                <lookup name="java:/queue/t24ARCMOBReplyQueue" lookup="java:global/remoteContext/t24ARCMOBReplyQueue"/>
+                <lookup name="java:/queue/t24HSMReplyQueue" lookup="java:global/remoteContext/t24HSMReplyQueue"/>
+                <lookup name="java:/queue/t24AAExtQueue" lookup="java:global/remoteContext/t24AAExtQueue"/>
+                <lookup name="java:/queue/t24TCIBCORPReplyQueue" lookup="java:global/remoteContext/t24TCIBCORPReplyQueue"/>
+                <lookup name="java:/queue/PROLENDERRES" lookup="java:global/remoteContext/PROLENDERRES"/>
+                <lookup name="java:/queue/t24CALLATReplyQueue" lookup="java:global/remoteContext/t24CALLATReplyQueue"/>
+                <lookup name="java:/queue/t24DSFPACKAGERQueue" lookup="java:global/remoteContext/t24DSFPACKAGERQueue"/>
+                <lookup name="java:/queue/PROLENDERREQ" lookup="java:global/remoteContext/PROLENDERREQ"/>
+                <lookup name="java:/queue/t24HSMRequestQueue" lookup="java:global/remoteContext/t24HSMRequestQueue"/>
+                <lookup name="java:/queue/t24EbillQueue" lookup="java:global/remoteContext/t24EbillQueue"/>
+                <lookup name="java:/queue/t24AMLQueue" lookup="java:global/remoteContext/t24AMLQueue"/>
+                <lookup name="java:/queue/FHMRESP" lookup="java:global/remoteContext/FHMRESP"/>
+                <lookup name="java:/queue/t24TPSQueue" lookup="java:global/remoteContext/t24TPSQueue"/>
+                <lookup name="java:/queue/t24DSFPACKAGERReplyQueue" lookup="java:global/remoteContext/t24DSFPACKAGERReplyQueue"/>
+                <lookup name="java:/queue/t24OFSReplyQueue" lookup="java:global/remoteContext/t24OFSReplyQueue"/>
+                <lookup name="java:/queue/t24TWSQueue" lookup="java:global/remoteContext/t24TWSQueue"/>
+                <lookup name="java:/queue/t24TPSInstInReplyQueue" lookup="java:global/remoteContext/t24TPSInstInReplyQueue"/>
+                <lookup name="java:/queue/t24SWFQueue" lookup="java:global/remoteContext/t24SWFQueue"/>
+                <lookup name="java:/queue/t24TCIBCORPQueue" lookup="java:global/remoteContext/t24TCIBCORPQueue"/>
+                <lookup name="java:/queue/t24BROWSERReplyQueue" lookup="java:global/remoteContext/t24BROWSERReplyQueue"/>
+                <lookup name="java:/queue/t24IFOutboundQueue" lookup="java:global/remoteContext/t24IFOutboundQueue"/>
+                <lookup name="java:/queue/t24CALLATQueue" lookup="java:global/remoteContext/t24CALLATQueue"/>
+                <lookup name="java:/queue/t24TCIBWEALTHReplyQueue" lookup="java:global/remoteContext/t24TCIBWEALTHReplyQueue"/>
+                <lookup name="java:/queue/t24IRISIntReplyQueue" lookup="java:global/remoteContext/t24IRISIntReplyQueue"/>
+                <lookup name="java:/queue/t24TCIBWEALTHQueue" lookup="java:global/remoteContext/t24TCIBWEALTHQueue"/>
+                <lookup name="java:/queue/t24TPSInstInQueue" lookup="java:global/remoteContext/t24TPSInstInQueue"/>
+                <lookup name="java:/queue/POSREQ" lookup="java:global/remoteContext/POSREQ"/>
+                <lookup name="java:/queue/MDBRESP" lookup="java:global/remoteContext/MDBRESP"/>
+                <lookup name="java:/queue/MDBREQ" lookup="java:global/remoteContext/MDBREQ"/>
+                <lookup name="java:/queue/t24EbillReplyQueue" lookup="java:global/remoteContext/t24EbillReplyQueue"/>
+                <lookup name="java:/queue/t24OFSQueue" lookup="java:global/remoteContext/t24OFSQueue"/>
+                <lookup name="java:/queue/t24SEATReplyQueue" lookup="java:global/remoteContext/t24SEATReplyQueue"/>
+                <lookup name="java:/queue/t24TCIBQueue" lookup="java:global/remoteContext/t24TCIBQueue"/>
+                <lookup name="java:/queue/FHMREQ" lookup="java:global/remoteContext/FHMREQ"/>
+                <lookup name="java:/queue/t24IRISMetaDataQueue" lookup="java:global/remoteContext/t24IRISMetaDataQueue"/>
+                <lookup name="java:/queue/t24BROWSERQueue" lookup="java:global/remoteContext/t24BROWSERQueue"/>
+                <lookup name="java:/queue/t24TCIBReplyQueue" lookup="java:global/remoteContext/t24TCIBReplyQueue"/>
+                <lookup name="java:/queue/t24AAExtReplyQueue" lookup="java:global/remoteContext/t24AAExtReplyQueue"/>
+                <lookup name="java:/queue/ATMRESP" lookup="java:global/remoteContext/ATMRESP"/>
+                <lookup name="java:/queue/t24SWFReplyQueue" lookup="java:global/remoteContext/t24SWFReplyQueue"/>
+                <lookup name="java:/queue/MDIREQ" lookup="java:global/remoteContext/MDIREQ"/>
+                <lookup name="java:/queue/IVRSYNTRES" lookup="java:global/remoteContext/IVRSYNTRES"/>
+                <lookup name="java:/queue/ATMREQ" lookup="java:global/remoteContext/ATMREQ"/>
+                <lookup name="java:/queue/IVRSYNTREQ" lookup="java:global/remoteContext/IVRSYNTREQ"/>
+                <lookup name="java:/queue/t24IRISIntQueue" lookup="java:global/remoteContext/t24IRISIntQueue"/>
+                <lookup name="java:/queue/IVRREQ" lookup="java:global/remoteContext/IVRREQ"/>
+                <lookup name="java:/queue/t24IRISMetaDataReplyQueue" lookup="java:global/remoteContext/t24IRISMetaDataReplyQueue"/>
+                <lookup name="java:/queue/IVRRES" lookup="java:global/remoteContext/IVRRES"/>
+                <lookup name="java:/queue/t24TPSReplyQueue" lookup="java:global/remoteContext/t24TPSReplyQueue"/>
+                <lookup name="java:/queue/t24ARCMOBQueue" lookup="java:global/remoteContext/t24ARCMOBQueue"/>
+                <lookup name="java:/queue/t24AAIntReplyQueue" lookup="java:global/remoteContext/t24AAIntReplyQueue"/>
+                <lookup name="java:/queue/EBILLFUTPAYRESP" lookup="java:global/remoteContext/EBILLFUTPAYRESP"/>
+                <lookup name="java:/queue/t24TWSReplyQueue" lookup="java:global/remoteContext/t24TWSReplyQueue"/>
+                <lookup name="java:/queue/t24EXECQueue" lookup="java:global/remoteContext/t24EXECQueue"/>
+                <lookup name="java:/queue/t24AMLReplyQueue" lookup="java:global/remoteContext/t24AMLReplyQueue"/>
+                <lookup name="java:/queue/t24SEATQueue" lookup="java:global/remoteContext/t24SEATQueue"/>
+                <lookup name="java:/queue/t24IRISExtQueue" lookup="java:global/remoteContext/t24IRISExtQueue"/>
+                <lookup name="java:/queue/t24IFInboundQueue" lookup="java:global/remoteContext/t24IFInboundQueue"/>
+                <lookup name="java:/queue/POSRESP" lookup="java:global/remoteContext/POSRESP"/>
+                <lookup name="java:/queue/EBILLFUTPAYREQ" lookup="java:global/remoteContext/EBILLFUTPAYREQ"/>
+            </bindings>
             <remote-naming/>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:pojo:1.0"/>
@@ -541,7 +689,8 @@
             <http-connector name="http-remoting-connector" connector-ref="default" security-realm="ApplicationRealm"/>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:request-controller:1.0"/>
-        <subsystem xmlns="urn:jboss:domain:resource-adapters:5.0">
+        <subsystem xmlns="urn:jboss:domain:resource-adapters:5.0"/>
+        <!-- <subsystem xmlns="urn:jboss:domain:resource-adapters:5.0">
             <resource-adapters>
                 <resource-adapter id="activemq-rar.rar">
                     <archive>
@@ -892,7 +1041,7 @@
                     </admin-objects>
                 </resource-adapter>
             </resource-adapters>
-        </subsystem>
+        </subsystem> -->
         <subsystem xmlns="urn:jboss:domain:sar:1.0"/>
         <subsystem xmlns="urn:jboss:domain:security:2.0">
             <security-domains>
@@ -996,6 +1145,12 @@
         <socket-binding name="iiop-ssl" interface="unsecure" port="3529"/>
         <outbound-socket-binding name="mail-smtp">
             <remote-destination host="localhost" port="25"/>
+        </outbound-socket-binding>
+        <outbound-socket-binding name="remote-artemis-1">
+            <remote-destination host="10.20.10.14" port="61616"/>
+        </outbound-socket-binding>
+        <outbound-socket-binding name="remote-artemis-2">
+            <remote-destination host="10.20.10.15" port="61616"/>
         </outbound-socket-binding>
     </socket-binding-group>
 </server>

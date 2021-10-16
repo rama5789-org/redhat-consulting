@@ -195,7 +195,7 @@
                 <singleton default-access-timeout="5000"/>
             </session-bean>
             <mdb>
-                <resource-adapter-ref resource-adapter-name="activemq-rar.rar"/>
+                <resource-adapter-ref resource-adapter-name="${ejb.resource-adapter-name:activemq-ra.rar}"/>
                 <bean-instance-pool-ref pool-name="mdb-strict-max-pool"/>
             </mdb>
             <pools>
@@ -414,7 +414,7 @@
                 <smtp-server outbound-socket-binding-ref="mail-smtp"/>
             </mail-session>
         </subsystem>
-        <subsystem xmlns="urn:jboss:domain:messaging-activemq:4.0">
+        <!-- <subsystem xmlns="urn:jboss:domain:messaging-activemq:4.0">
             <server name="default">
                 <journal pool-files="10"/>
                 <security-setting name="#">
@@ -442,11 +442,39 @@
                 <connection-factory name="RemoteConnectionFactory" entries="java:jboss/exported/jms/RemoteConnectionFactory" connectors="http-connector"/>
                 <pooled-connection-factory name="activemq-ra" entries="java:/JmsXA_notused java:jboss/DefaultJMSConnectionFactory" connectors="in-vm" transaction="xa"/>
             </server>
+        </subsystem> -->
+        <subsystem xmlns="urn:jboss:domain:messaging-activemq:4.0">
+            <server name="default" id-cache-size="2000">
+                <remote-connector name="remote-artemis-1" socket-binding="remote-artemis-1"/>
+                <remote-connector name="remote-artemis-2" socket-binding="remote-artemis-2"/>
+                <pooled-connection-factory name="activemq-ra.rar" entries="java:/ConnectionFactory java:/RemoteJmsXA java:jboss/RemoteJmsXA java:jboss/DefaultJMSConnectionFactory" connectors="remote-artemis-1 remote-artemis-2" ha="true" user="admin" password="Admin123$" min-pool-size="15" max-pool-size="30" statistics-enabled="true">
+                    <inbound-config rebalance-connections="true" setup-attempts="-1" setup-interval="5000"/>
+                </pooled-connection-factory>
+            </server>
         </subsystem>
         <subsystem xmlns="urn:wildfly:microprofile-config-smallrye:1.0"/>
         <subsystem xmlns="urn:wildfly:microprofile-health-smallrye:1.0" security-enabled="false"/>
         <subsystem xmlns="urn:wildfly:microprofile-opentracing-smallrye:1.0"/>
+        <!-- <subsystem xmlns="urn:jboss:domain:naming:2.0">
+            <remote-naming/>
+        </subsystem> -->
         <subsystem xmlns="urn:jboss:domain:naming:2.0">
+            <bindings>
+                <external-context name="java:global/remoteContext" module="org.apache.activemq.artemis" class="javax.naming.InitialContext">
+                    <environment>
+                        <property name="java.naming.factory.initial" value="org.apache.activemq.artemis.jndi.ActiveMQInitialContextFactory"/>
+                        <property name="queue.SampleQ" value="SampleQ"/>
+                        <property name="queue.t24BROWSERQueue" value="java:/queue/t24BROWSERQueue"/>
+                        <property name="queue.t24BROWSERReplyQueue" value="java:/queue/t24BROWSERReplyQueue"/>
+                        <property name="queue.t24OFSQueue" value="java:/queue/t24OFSQueue"/>
+                        <property name="queue.t24OFSReplyQueue" value="java:/queue/t24OFSReplyQueue"/>
+                    </environment>
+                </external-context>
+                <lookup name="java:/queue/t24BROWSERQueue" lookup="java:global/remoteContext/t24BROWSERQueue"/>
+                <lookup name="java:/queue/t24BROWSERReplyQueue" lookup="java:global/remoteContext/t24BROWSERReplyQueue"/>
+                <lookup name="java:/queue/t24OFSQueue" lookup="java:global/remoteContext/t24OFSQueue"/>
+                <lookup name="java:/queue/t24OFSReplyQueue" lookup="java:global/remoteContext/t24OFSReplyQueue"/>
+            </bindings>
             <remote-naming/>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:pojo:1.0"/>
@@ -454,7 +482,8 @@
             <http-connector name="http-remoting-connector" connector-ref="default" security-realm="ApplicationRealm"/>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:request-controller:1.0"/>
-        <subsystem xmlns="urn:jboss:domain:resource-adapters:5.0">
+        <subsystem xmlns="urn:jboss:domain:resource-adapters:5.0"/>
+        <!-- <subsystem xmlns="urn:jboss:domain:resource-adapters:5.0">
             <resource-adapters>
                 <resource-adapter id="activemq-rar.rar">
                     <archive>
@@ -510,7 +539,7 @@
                     </admin-objects>
                 </resource-adapter>
             </resource-adapters>
-        </subsystem>
+        </subsystem> -->
         <subsystem xmlns="urn:jboss:domain:sar:1.0"/>
         <subsystem xmlns="urn:jboss:domain:security:2.0">
             <security-domains>
@@ -613,6 +642,12 @@
         <socket-binding name="iiop-ssl" interface="unsecure" port="3529"/>
         <outbound-socket-binding name="mail-smtp">
             <remote-destination host="localhost" port="25"/>
+        </outbound-socket-binding>
+        <outbound-socket-binding name="remote-artemis-1">
+            <remote-destination host="10.20.10.14" port="61616"/>
+        </outbound-socket-binding>
+        <outbound-socket-binding name="remote-artemis-2">
+            <remote-destination host="10.20.10.15" port="61616"/>
         </outbound-socket-binding>
     </socket-binding-group>
 </server>
