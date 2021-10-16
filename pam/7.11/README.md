@@ -52,3 +52,22 @@ rhpamAdmin=6c6b00dba19cde22ae8bf271c70feaa2
 controllerUser=27e34bd14efaa100775250719c2f20b4
 
 ```
+
+# PAM DB Setup :
+
+```sh
+---------------------------------------------------
+# "standalone-full.xml" file changes:
+# Add below "system-properties" and also add postgres "datasource" and "driver":
+<system-properties>
+    ::::::::::
+    <property name="org.kie.server.persistence.ds" value="java:jboss/datasources/KieServerDS"/>
+    <property name="org.kie.server.persistence.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+</system-properties>
+
+# Add "module.xml" in /eap/modules/system/layers/base/com/postgresql/main Dir with "postgres driver jar"
+
+# Create a Database "jbpm" in postgres DB.
+# Run "postgresql-jbpm-schema.sql" in /rhpam-7.11.0-add-ons/rhpam-7.11.0-migration-tool/ddl-scripts/postgresql Dir.
+
+```

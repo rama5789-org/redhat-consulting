@@ -42,6 +42,7 @@
         <extension module="org.wildfly.iiop-openjdk"/>
     </extensions>
     <system-properties>
+        <!-- Kie properties -->
         <property name="org.kie.example" value="true"/>
         <property name="org.jbpm.designer.perspective" value="full"/>
         <property name="designerdataobjects" value="false"/>
@@ -60,6 +61,9 @@
         <property name="org.kie.server.controller" value="http://localhost:8080/business-central/rest/controller"/>
         <property name="org.kie.server.controller.user" value="controllerUser"/>
         <property name="org.kie.server.controller.pwd" value="${VAULT::vaulted::controller.password::1}"/>
+        <!-- Jbpm Data source properties -->
+        <property name="org.kie.server.persistence.ds" value="java:jboss/datasources/KieServerDS"/>
+        <property name="org.kie.server.persistence.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
     </system-properties>
     <vault>
         <vault-option name="KEYSTORE_URL" value="${jboss.home.dir}/vault.keystore"/>
@@ -189,9 +193,21 @@
                         <password>sa</password>
                     </security>
                 </datasource>
+                <!-- JBPM Data Source -->
+                <datasource jta="true" jndi-name="java:jboss/datasources/KieServerDS" pool-name="KieServerDS" enabled="true" use-java-context="true">
+                    <connection-url>jdbc:postgresql://localhost:5432/jbpm</connection-url>
+                    <driver>postgresql</driver>
+                    <security>
+                        <user-name>postgres</user-name>
+                        <password>mysecretpassword</password>
+                    </security>
+                </datasource>
                 <drivers>
                     <driver name="h2" module="com.h2database.h2">
                         <xa-datasource-class>org.h2.jdbcx.JdbcDataSource</xa-datasource-class>
+                    </driver>
+                    <driver name="postgresql" module="com.postgresql">
+                        <xa-datasource-class>org.postgresql.xa.PGXADataSource</xa-datasource-class>
                     </driver>
                 </drivers>
             </datasources>

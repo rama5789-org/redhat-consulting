@@ -1,1 +1,1 @@
-# Red Hat JBoss-EAP Info:
+# Red Hat Products
