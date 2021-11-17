@@ -5,6 +5,13 @@
 - https://access.redhat.com/articles/3405381#RHPAM711 (Red Hat Process Automation Manager 7 Supported Configurations)
 - https://access.redhat.com/solutions/6324271 (jar installer installation fails with "Cannot start embedded Host Controller")
 
+## Articles
+
+- https://jeftaylo.medium.com/expose-niogit-from-red-hat-business-central-2b28a9e7fb67
+- https://jeftaylo.medium.com/creating-maven-projects-that-can-be-imported-into-red-hat-business-central-8fb9e8d63d70
+- https://jeftaylo.medium.com/bpmn-timers-red-hat-process-automation-manager-and-postgresql-11-e67cd7d8b613
+- https://jeftaylo.medium.com/rhpam-on-openshift-d27629796202
+
 ```sh
 ---------------------------------------------------
 # Java version:
@@ -71,3 +78,7 @@ controllerUser=27e34bd14efaa100775250719c2f20b4
 # Run "postgresql-jbpm-schema.sql" in /rhpam-7.11.0-add-ons/rhpam-7.11.0-migration-tool/ddl-scripts/postgresql Dir.
 
 ```
+
+# Deploying PAM in Openshift :
+
+- https://access.redhat.com/documentation/en-us/red_hat_process_automation_manager/7.11/html/deploying_red_hat_process_automation_manager_on_red_hat_openshift_container_platform/index

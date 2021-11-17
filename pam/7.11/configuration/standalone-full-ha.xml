@@ -63,12 +63,14 @@
         <property name="org.kie.server.controller" value="http://localhost:8080/business-central/rest/controller"/>
         <property name="org.kie.server.controller.user" value="controllerUser"/>
         <property name="org.kie.server.controller.pwd" value="${VAULT::vaulted::controller.password::1}"/>
+        <property name="org.kie.server.persistence.ds" value="java:jboss/datasources/KieServerDS"/>
+        <property name="org.kie.server.persistence.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
     </system-properties>
     <vault>
         <vault-option name="KEYSTORE_URL" value="${jboss.home.dir}/vault.keystore"/>
-        <vault-option name="KEYSTORE_PASSWORD" value="MASK-30uyJOnOVkDtAy4MMj/Dh5"/>
+        <vault-option name="KEYSTORE_PASSWORD" value="MASK-2XkELIYT25cGX2hPUV3ogL"/>
         <vault-option name="KEYSTORE_ALIAS" value="vault"/>
-        <vault-option name="SALT" value="zKoGiN1d"/>
+        <vault-option name="SALT" value="mtuQyrQS"/>
         <vault-option name="ITERATION_COUNT" value="50"/>
         <vault-option name="ENC_FILE_DIR" value="${jboss.home.dir}/vault"/>
     </vault>
@@ -185,9 +187,28 @@
                         <password>sa</password>
                     </security>
                 </datasource>
+                <datasource jndi-name="java:jboss/datasources/KieServerDS" pool-name="KieServerDS">
+                    <connection-url>jdbc:postgresql://localhost:5432/jbpm</connection-url>
+                    <driver>postgresql</driver>
+                    <pool>
+                        <min-pool-size>0</min-pool-size>
+                        <max-pool-size>20</max-pool-size>
+                    </pool>
+                    <security>
+                        <user-name>postgres</user-name>
+                        <password>${VAULT::datasource.KieServerDS::password::1}</password>
+                    </security>
+                    <validation>
+                        <valid-connection-checker class-name="org.jboss.jca.adapters.jdbc.extensions.postgres.PostgreSQLValidConnectionChecker"/>
+                        <exception-sorter class-name="org.jboss.jca.adapters.jdbc.extensions.postgres.PostgreSQLExceptionSorter"/>
+                    </validation>
+                </datasource>
                 <drivers>
                     <driver name="h2" module="com.h2database.h2">
                         <xa-datasource-class>org.h2.jdbcx.JdbcDataSource</xa-datasource-class>
+                    </driver>
+                    <driver name="postgresql" module="org.postgresql">
+                        <xa-datasource-class>org.postgresql.xa.PGXADataSource</xa-datasource-class>
                     </driver>
                 </drivers>
             </datasources>

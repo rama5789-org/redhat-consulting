@@ -38,34 +38,6 @@
         <extension module="org.wildfly.extension.security.manager"/>
         <extension module="org.wildfly.extension.undertow"/>
     </extensions>
-    <system-properties>
-        <property name="org.kie.example" value="true"/>
-        <property name="org.jbpm.designer.perspective" value="full"/>
-        <property name="designerdataobjects" value="false"/>
-        <property name="org.kie.server.user" value="controllerUser"/>
-        <property name="org.kie.server.pwd" value="${VAULT::vaulted::controller.password::1}"/>
-        <property name="org.kie.server.location" value="http://localhost:8080/kie-server/services/rest/server"/>
-        <property name="org.kie.server.id" value="default-kieserver"/>
-        <property name="org.drools.server.ext.disabled" value="false"/>
-        <property name="org.jbpm.server.ext.disabled" value="false"/>
-        <property name="org.jbpm.ui.server.ext.disabled" value="false"/>
-        <property name="org.optaplanner.server.ext.disabled" value="false"/>
-        <property name="org.jbpm.case.server.ext.disabled" value="false"/>
-        <property name="org.kie.dmn.server.ext.disabled" value="false"/>
-        <property name="org.kie.swagger.server.ext.disabled" value="false"/>
-        <property name="org.kie.prometheus.server.ext.disabled" value="true"/>
-        <property name="org.kie.server.controller" value="http://localhost:8080/business-central/rest/controller"/>
-        <property name="org.kie.server.controller.user" value="controllerUser"/>
-        <property name="org.kie.server.controller.pwd" value="${VAULT::vaulted::controller.password::1}"/>
-    </system-properties>
-    <vault>
-        <vault-option name="KEYSTORE_URL" value="${jboss.home.dir}/vault.keystore"/>
-        <vault-option name="KEYSTORE_PASSWORD" value="MASK-30uyJOnOVkDtAy4MMj/Dh5"/>
-        <vault-option name="KEYSTORE_ALIAS" value="vault"/>
-        <vault-option name="SALT" value="zKoGiN1d"/>
-        <vault-option name="ITERATION_COUNT" value="50"/>
-        <vault-option name="ENC_FILE_DIR" value="${jboss.home.dir}/vault"/>
-    </vault>
     <management>
         <security-realms>
             <security-realm name="ManagementRealm">
@@ -466,7 +438,6 @@
                         <login-module code="RealmDirect" flag="required">
                             <module-option name="password-stacking" value="useFirstPass"/>
                         </login-module>
-                        <login-module name="KieLoginModule" code="org.kie.security.jaas.KieLoginModule" flag="optional" module="deployment.business-central.war"/>
                     </authentication>
                 </security-domain>
                 <security-domain name="jboss-web-policy" cache-type="default">
